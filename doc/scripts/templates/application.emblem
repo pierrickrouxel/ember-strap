@@ -1,0 +1,15 @@
+nav.navbar.navbar-default.navbar-fixed-top
+  .container-fluid
+    .navbar-header
+      button.navbar-toggle type="button" data-toggle="collapse" data-target=".navbar-collapse"
+        span.sr-only Toggle navigation
+        span.icon-bar
+        span.icon-bar
+        span.icon-bar
+
+      = link-to "index" classNames="navbar-brand" | EmberStrap
+
+    .collapse.navbar-collapse
+      ul.nav.navbar-nav
+        li
+          = link-to "index" | Views
