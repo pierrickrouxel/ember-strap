@@ -48,7 +48,8 @@ if (env !== 'production') {
             'jquery/jquery.js',
             'handlebars/handlebars.js',
             'ember/ember.js',
-						'bootstrap-sass-official/vendor/assets/javascripts/bootstrap.js'
+            'bootstrap-sass-official/vendor/assets/javascripts/bootstrap/tooltip.js',
+			'bootstrap-sass-official/vendor/assets/javascripts/bootstrap/*.js'
         ],
         outputFile: '/dependencies.js'
     });

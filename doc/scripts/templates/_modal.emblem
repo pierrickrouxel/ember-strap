@@ -1,0 +1,4 @@
+.bs-docs-sections#modal
+  h3 Modal
+  div.bs-example
+    button.btn.btn-primary click="openExampleModal" Open modal

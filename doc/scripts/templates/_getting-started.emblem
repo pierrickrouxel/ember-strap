@@ -1,0 +1,7 @@
+.bs-docs-sections#getting-started
+  h3 Getting started
+  div.bs-callout.bs-callout-info
+    h4 About the project
+    p
+      | The objective it's append an easy way to use Bootstrap to Ember.<br>
+                This project is deeply inspired by <a href="http://mgcrea.github.io/angular-strap/">AngularStrap</a>.

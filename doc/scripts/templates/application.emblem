@@ -1,5 +1,5 @@
-nav.navbar.navbar-default.navbar-fixed-top
-  .container-fluid
+header.navbar.navbar-static-top.bs-docs-nav
+  .container
     .navbar-header
       button.navbar-toggle type="button" data-toggle="collapse" data-target=".navbar-collapse"
         span.sr-only Toggle navigation
@@ -9,7 +9,27 @@ nav.navbar.navbar-default.navbar-fixed-top
 
       = link-to "index" classNames="navbar-brand" | EmberStrap
 
-    .collapse.navbar-collapse
+    .collapse.navbar-collapse.bs-navbar-collapse
       ul.nav.navbar-nav
         li
-          = link-to "index" | Views
+          = link-to "index" | Components
+
+.bs-docs-header
+  .container
+    h1.page-header EmberStrap
+    p
+      | Ember wrapper for Twitter Bootstrap 3
+
+.container.bs-docs-container
+  .row
+    .col-md-9
+      partial "getting-started"
+      partial "modal"
+
+    .col-md-3
+      .bs-docs-sidebar.affix-top
+        ul.nav.bs-docs-sidenav
+          li
+            a href="#" Getting started
+          li
+            a href="#" Modal
