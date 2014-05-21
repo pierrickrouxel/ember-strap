@@ -1,4 +1,15 @@
 .bs-docs-sections#modal
   h3 Modal
-  div.bs-example
+  .bs-example
     button.btn.btn-primary click="openExampleModal" Open modal
+
+  .highlight
+    pre.prettyprint
+      |
+        App.ApplicationRoute = Ember.Route.extend({
+          actions: {
+            showExampleModal: function() {
+                this.showModal('example', { controller: 'example-controller' });
+            }
+          }
+        });

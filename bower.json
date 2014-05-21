@@ -1,6 +1,6 @@
 {
   "name": "emberstrap",
-  "dependencies": {
+  "devDependencies": {
     "handlebars": "~1.1.2",
     "jquery": "~1.9.1",
     "ember": "~1.2.0",

@@ -7,21 +7,25 @@ EmberStrap.Modal = Ember.View.extend
     </div>'
   )
 
-  classNames: ['modal', 'fade']
+  classNames: ['modal']
+
+  fade: true
 
   didInsertElement: ->
+    @$().toggleClass('fade', @get('fade'))
+
     @$().on('hidden.bs.modal', $.proxy(@destroyElement, this)).modal('show')
 
   willDestroyElement: ->
     @$().off('hidden.bs.modal').modal('hide')
 
 Ember.Route.reopen
-  openModal: (templateName, controller) ->
-    modalView = @container.lookup("emberstrap:modal")
+  showModal: (templateName, options) ->
+    modalView = @container.lookup('emberstrap:modal')
     modalView.set('templateName', templateName)
-    modalView.set('controller', controller)
+    modalView.setProperties(options)
     modalView.appendTo('body')
 
-  closeModal: ->
-    @container.lookup("emberstrap:modal").destroyElement()
+  hideModal: ->
+    @container.lookup('emberstrap:modal').destroyElement()
 
