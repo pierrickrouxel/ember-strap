@@ -1,6 +1,6 @@
 EmberStrap.Modal = Ember.View.extend
   layout: Ember.Handlebars.compile(
-    '<div class="modal-dialog">
+    '<div {{bind-attr class=":modal-dialog view.sizeClass"}}>
       <div class="modal-content">
         {{yield}}
       </div>
@@ -8,12 +8,19 @@ EmberStrap.Modal = Ember.View.extend
   )
 
   classNames: ['modal']
+  classNameBindings: ['animation:fade']
 
-  fade: true
+  animation: true
+  size: ''
+
+  sizeClass: (->
+    if @get('size') is 'small'
+      'modal-sm'
+    else if @get('size') is 'large'
+      'modal-lg'
+  ).property('size')
 
   didInsertElement: ->
-    @$().toggleClass('fade', @get('fade'))
-
     @$().on('hidden.bs.modal', $.proxy(@destroyElement, this)).modal('show')
 
   willDestroyElement: ->

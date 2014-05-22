@@ -3,11 +3,10 @@ var compileSass = require('broccoli-sass');
 var filterTemplate = require('broccoli-ember-emblem');
 var uglifyJavaScript = require('broccoli-uglify-js');
 var mergeTrees = require('broccoli-merge-trees');
-var pickFiles = require('broccoli-static-compiler')
+var pickFiles = require('broccoli-static-compiler');
 var concat = require('broccoli-concat');
 var select = require('broccoli-select');
 var moveFile = require('broccoli-file-mover');
-var findBowerTrees = require('broccoli-bower');
 var env = require('broccoli-env').getEnv();
 
 // Library
@@ -16,7 +15,7 @@ var lib = 'lib';
 lib = filterCoffeeScript(lib);
 
 var libJs = concat(lib, {
-    inputFiles: ['**/*.js'],
+    inputFiles: ['emberstrap.js', '**/*.js'],
     wrapInEval: env !== 'production',
     outputFile: '/emberstrap.js'
 });
@@ -43,15 +42,23 @@ libJs = mergeTrees([libJs, minLibJs]);
 if (env !== 'production') {
     var publicFiles = 'doc/public';
 
-    var bowerDependencies = concat('bower_components', {
+    var bowerDependenciesJs = concat('bower_components', {
         inputFiles: [
             'jquery/jquery.js',
             'handlebars/handlebars.js',
             'ember/ember.js',
             'bootstrap-sass-official/vendor/assets/javascripts/bootstrap/tooltip.js',
-			'bootstrap-sass-official/vendor/assets/javascripts/bootstrap/*.js'
+			'bootstrap-sass-official/vendor/assets/javascripts/bootstrap/*.js',
+            'highlightjs/highlight.pack.js'
         ],
         outputFile: '/dependencies.js'
+    });
+
+    var bowerDependenciesCss = concat('bower_components', {
+        inputFiles: [
+            'highlightjs/styles/github.css'
+        ],
+        outputFile: '/dependencies.css'
     });
 
     var doc = 'doc';
@@ -64,7 +71,13 @@ if (env !== 'production') {
         inputFiles: ['**/*.js'],
         outputFile: '/doc.js'
     });
-    libJs = mergeTrees([libJs, docJs, docCss, bowerDependencies, publicFiles]);
+
+    var docFonts = pickFiles('bower_components', {
+        srcDir: 'font-awesome/fonts',
+        destDir: 'fonts'
+    });
+
+    libJs = mergeTrees([libJs, docJs, docCss, docFonts, bowerDependenciesJs, bowerDependenciesCss, publicFiles]);
 }
 
 module.exports = libJs;

@@ -23,7 +23,6 @@
     "broccoli-template": "^0.1.0",
     "broccoli-coffee": "^0.1.0",
     "broccoli-merge-trees": "^0.1.3",
-    "broccoli-bower": "^0.2.0",
     "broccoli-emblem-compiler": "^0.3.16",
     "broccoli-concat": "0.0.6",
     "broccoli-ember-emblem": "^0.1.0",

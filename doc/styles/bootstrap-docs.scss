@@ -583,6 +583,11 @@ body {
   font-weight: 500;
 }
 
+/* Nav: separator */
+.bs-docs-sidebar hr {
+  margin: 2px 0px;
+}
+
 /* Back to top (hidden on mobile) */
 .back-to-top {
   display: none;

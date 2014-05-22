@@ -1,15 +1,44 @@
-.bs-docs-sections#modal
-  h3 Modal
+.bs-docs-section#modal
+  h1 Modal
+
+  h3 Example
   .bs-example
     button.btn.btn-primary click="openExampleModal" Open modal
 
   .highlight
-    pre.prettyprint
-      |
-        App.ApplicationRoute = Ember.Route.extend({
-          actions: {
-            showExampleModal: function() {
-                this.showModal('example', { controller: 'example-controller' });
-            }
-          }
-        });
+    pre
+      code class="javascript"= modal
+
+  h3 Methods
+  p Methods available inside Ember.Route.
+  h4
+    ' .showModal
+    small (template, options)
+  p Reveals the modal.
+
+  h4
+    ' .hideModal
+    small ()
+  p Hides the modal.
+
+  h3 Options
+  table.table.table-bordered.table-striped
+    thead
+      tr
+        th Name
+        th Type
+        th Default
+        th Description
+
+    tbody
+      tr
+        td animation
+        td boolean
+        td true
+        td Apply a CSS fade transition to the modal.
+
+      tr
+        td size
+        td string
+        td ''
+        td <code>small</code> or <code>large</code> to change modal size.
