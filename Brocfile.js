@@ -7,7 +7,19 @@ var pickFiles = require('broccoli-static-compiler');
 var concat = require('broccoli-concat');
 var select = require('broccoli-select');
 var moveFile = require('broccoli-file-mover');
+var writeFile = require('broccoli-file-creator');
 var env = require('broccoli-env').getEnv();
+
+var pkg = require('./package.json');
+var banner = '/**\n' +
+    ' * ' + pkg.name + '\n' +
+    ' * @version v' + pkg.version + ' - ' + new Date().toISOString().substr(0, 10) + '\n' +
+    ' * @link ' +  pkg.homepage + '\n' +
+    ' * @author ' + pkg.author.name + ' (' + pkg.author.email + ')\n' +
+    ' * @license MIT License, http://www.opensource.org/licenses/MIT\n' +
+    ' */\n';
+
+banner = writeFile('banner.js', banner);
 
 // Library
 
@@ -17,6 +29,11 @@ lib = filterCoffeeScript(lib);
 var libJs = concat(lib, {
     inputFiles: ['emberstrap.js', '**/*.js'],
     wrapInEval: env !== 'production',
+    outputFile: '/emberstrap.js'
+});
+
+libJs = concat(mergeTrees([libJs, banner]), {
+   inputFiles: ['banner.js', 'emberstrap.js'],
     outputFile: '/emberstrap.js'
 });
 
@@ -34,6 +51,12 @@ minLibJs = uglifyJavaScript(minLibJs, {
     // mangle: false,
     // compress: false
 });
+
+minLibJs = concat(mergeTrees([minLibJs, banner]), {
+    inputFiles: ['banner.js', 'emberstrap.min.js'],
+    outputFile: '/emberstrap.min.js'
+});
+
 libJs = mergeTrees([libJs, minLibJs]);
 
 

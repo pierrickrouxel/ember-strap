@@ -1,9 +1,19 @@
 {
   "name": "emberstrap",
-  "description": "Ember wrapper for Boostrap",
+  "description": "Ember wrapper for Twitter Boostrap 3",
   "version": "0.0.1",
-  "author": "Pierrick Rouxel <pierrick.rouxel@me.com>",
+  "keywords": [
+    "ember",
+    "bootstrap"
+  ],
+  "author": {
+    "name": "Pierrick Rouxel",
+    "email": "pierrick.rouxel@me.com",
+    "url": "https://github.com/pierrickrouxel"
+  },
+  "bugs": "https://github.com/pierrickrouxel/emberstrap/issues",
   "license": "MIT",
+  "homepage": "https://github.com/pierrickrouxel/emberstrap",
   "repository": {
     "type": "git",
     "url": "https://github.com/pierrickrouxel/emberstrap"
@@ -27,6 +37,7 @@
     "broccoli-concat": "0.0.6",
     "broccoli-ember-emblem": "^0.1.0",
     "broccoli-sass": "^0.1.4",
-    "broccoli-static-compiler": "^0.1.4"
+    "broccoli-static-compiler": "^0.1.4",
+    "broccoli-file-creator": "^0.1.0"
   }
 }
