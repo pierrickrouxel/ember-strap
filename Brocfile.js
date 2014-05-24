@@ -7,19 +7,35 @@ var pickFiles = require('broccoli-static-compiler');
 var concat = require('broccoli-concat');
 var select = require('broccoli-select');
 var moveFile = require('broccoli-file-mover');
-var writeFile = require('broccoli-file-creator');
 var env = require('broccoli-env').getEnv();
 
-var pkg = require('./package.json');
-var banner = '/**\n' +
-    ' * ' + pkg.name + '\n' +
-    ' * @version v' + pkg.version + ' - ' + new Date().toISOString().substr(0, 10) + '\n' +
-    ' * @link ' +  pkg.homepage + '\n' +
-    ' * @author ' + pkg.author.name + ' (' + pkg.author.email + ')\n' +
-    ' * @license MIT License, http://www.opensource.org/licenses/MIT\n' +
-    ' */\n';
+// Add banner to file
 
-banner = writeFile('banner.js', banner);
+function concatBanner(tree, options) {
+    var writeFile = require('broccoli-file-creator');
+    var pkg = require('./package.json');
+
+    var banner = '/**\n' +
+        ' * ' + pkg.name + '\n' +
+        ' * @version v' + pkg.version + ' - ' + new Date().toISOString().substr(0, 10) + '\n' +
+        ' * @link ' +  pkg.homepage + '\n' +
+        ' * @author ' + pkg.author.name + ' (' + pkg.author.email + ')\n' +
+        ' * @license MIT License, http://www.opensource.org/licenses/MIT\n' +
+        ' */\n';
+
+    banner = writeFile('banner.js', banner);
+
+    options.inputFiles.forEach(function(inputFile) {
+
+        var resultTree = concat(mergeTrees([tree, banner]), {
+            inputFiles: ['banner.js', inputFile],
+            outputFile: '/' + inputFile
+        });
+
+        tree = mergeTrees([tree, resultTree], { overwrite: true });
+    });
+    return tree;
+}
 
 // Library
 
@@ -29,11 +45,6 @@ lib = filterCoffeeScript(lib);
 var libJs = concat(lib, {
     inputFiles: ['ember-strap.js', '**/*.js'],
     wrapInEval: env !== 'production',
-    outputFile: '/ember-strap.js'
-});
-
-libJs = concat(mergeTrees([libJs, banner]), {
-   inputFiles: ['banner.js', 'ember-strap.js'],
     outputFile: '/ember-strap.js'
 });
 
@@ -52,12 +63,11 @@ minLibJs = uglifyJavaScript(minLibJs, {
     // compress: false
 });
 
-minLibJs = concat(mergeTrees([minLibJs, banner]), {
-    inputFiles: ['banner.js', 'ember-strap.min.js'],
-    outputFile: '/ember-strap.min.js'
-});
-
 libJs = mergeTrees([libJs, minLibJs]);
+
+libJs = concatBanner(libJs, {
+    inputFiles: ['ember-strap.js', 'ember-strap.min.js']
+});
 
 
 // Documentation
