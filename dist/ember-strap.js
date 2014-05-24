@@ -1,7 +1,7 @@
 /**
- * emberstrap
- * @version v0.0.1 - 2014-05-23
- * @link https://github.com/pierrickrouxel/emberstrap
+ * ember-strap
+ * @version v0.0.1 - 2014-05-24
+ * @link https://github.com/pierrickrouxel/ember-strap
  * @author Pierrick Rouxel (pierrick.rouxel@me.com)
  * @license MIT License, http://www.opensource.org/licenses/MIT
  */
@@ -29,9 +29,9 @@
 
 (function() {
   Ember.Application.initializer({
-    name: "emberstrap",
+    name: "ember-strap",
     initialize: function(container, application) {
-      container.register('emberstrap:modal', EmberStrap.Modal);
+      container.register('ember-strap:modal', EmberStrap.Modal);
       return container.register('component:scroll-to', EmberStrap.ScrollTo);
     }
   });
@@ -63,13 +63,13 @@
   Ember.Route.reopen({
     showModal: function(templateName, options) {
       var modalView;
-      modalView = this.container.lookup('emberstrap:modal');
+      modalView = this.container.lookup('ember-strap:modal');
       modalView.set('templateName', templateName);
       modalView.setProperties(options);
       return modalView.appendTo('body');
     },
     hideModal: function() {
-      return this.container.lookup('emberstrap:modal').destroyElement();
+      return this.container.lookup('ember-strap:modal').destroyElement();
     }
   });
 

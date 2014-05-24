@@ -27,19 +27,19 @@ var lib = 'lib';
 lib = filterCoffeeScript(lib);
 
 var libJs = concat(lib, {
-    inputFiles: ['emberstrap.js', '**/*.js'],
+    inputFiles: ['ember-strap.js', '**/*.js'],
     wrapInEval: env !== 'production',
-    outputFile: '/emberstrap.js'
+    outputFile: '/ember-strap.js'
 });
 
 libJs = concat(mergeTrees([libJs, banner]), {
-   inputFiles: ['banner.js', 'emberstrap.js'],
-    outputFile: '/emberstrap.js'
+   inputFiles: ['banner.js', 'ember-strap.js'],
+    outputFile: '/ember-strap.js'
 });
 
 var minLibJs = moveFile(libJs, {
-    srcFile: 'emberstrap.js',
-    destFile: 'emberstrap.min.js',
+    srcFile: 'ember-strap.js',
+    destFile: 'ember-strap.min.js',
     copy: true
 });
 
@@ -53,8 +53,8 @@ minLibJs = uglifyJavaScript(minLibJs, {
 });
 
 minLibJs = concat(mergeTrees([minLibJs, banner]), {
-    inputFiles: ['banner.js', 'emberstrap.min.js'],
-    outputFile: '/emberstrap.min.js'
+    inputFiles: ['banner.js', 'ember-strap.min.js'],
+    outputFile: '/ember-strap.min.js'
 });
 
 libJs = mergeTrees([libJs, minLibJs]);

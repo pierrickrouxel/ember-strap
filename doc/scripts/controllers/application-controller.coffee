@@ -1,6 +1,6 @@
 App.ApplicationController = Ember.Controller.extend
   init: ->
-    $.getJSON 'https://api.github.com/repos/pierrickrouxel/emberstrap/tags', (json) =>
+    $.getJSON 'https://api.github.com/repos/pierrickrouxel/ember-strap/tags', (json) =>
       lastVersion = Ember.A(json).get('firstObject')
       @set('version', lastVersion.name) if lastVersion
 

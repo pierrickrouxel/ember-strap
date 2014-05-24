@@ -16,11 +16,11 @@ header.navbar.navbar-static-top.bs-docs-nav
 
       ul.nav.navbar-nav.navbar-right
         li
-          a href="//github.com/pierrickrouxel/emberstrap"
+          a href="//github.com/pierrickrouxel/ember-strap"
             i.fa.fa-github
             | &nbsp;GitHub
         li
-          a href="//github.com/pierrickrouxel/emberstrap/releases" target="_blank"
+          a href="//github.com/pierrickrouxel/ember-strap/releases" target="_blank"
             i.fa.fa-download
             | &nbsp; {{version}}
 

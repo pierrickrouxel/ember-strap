@@ -1,6 +1,6 @@
 Ember.Application.initializer
-  name: "emberstrap"
+  name: "ember-strap"
 
   initialize: (container, application) ->
-    container.register('emberstrap:modal', EmberStrap.Modal)
+    container.register('ember-strap:modal', EmberStrap.Modal)
     container.register('component:scroll-to', EmberStrap.ScrollTo)
