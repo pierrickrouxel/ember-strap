@@ -1,4 +1,4 @@
-EmberStrap.Modal = Ember.View.extend
+EmberStrap.ModalView = Ember.View.extend
   layout: Ember.Handlebars.compile(
     '<div {{bind-attr class=":modal-dialog view.sizeClass"}}>
       <div class="modal-content">
@@ -12,6 +12,7 @@ EmberStrap.Modal = Ember.View.extend
 
   animation: true
   size: ''
+  backdrop: true
 
   sizeClass: (->
     if @get('size') is 'small'
@@ -21,7 +22,11 @@ EmberStrap.Modal = Ember.View.extend
   ).property('size')
 
   didInsertElement: ->
-    @$().on('hidden.bs.modal', $.proxy(@destroyElement, this)).modal('show')
+    @$().appendTo('body')
+    @$().modal(backdrop: @get('backdrop'))
+    @$().on('hidden.bs.modal', $.proxy(@destroyElement, this))
+
+    @$().modal('show')
 
   willDestroyElement: ->
     @$().off('hidden.bs.modal').modal('hide')
@@ -31,8 +36,7 @@ Ember.Route.reopen
     modalView = @container.lookup('ember-strap:modal')
     modalView.set('templateName', templateName)
     modalView.setProperties(options)
-    modalView.appendTo('body')
+    modalView.createElement()
 
   hideModal: ->
     @container.lookup('ember-strap:modal').destroyElement()
-

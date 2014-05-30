@@ -35,15 +35,18 @@ header.navbar.navbar-static-top.bs-docs-nav
     .col-md-9
       partial "getting-started"
       partial "modal"
+      partial "popover"
       partial "scrollspy"
 
     .col-md-3
       .bs-docs-sidebar.hidden-print
         ul.nav.bs-docs-sidenav
           li
-            scroll-to href="#getting-started" | Getting started
+            es-scroll-to href="#getting-started" | Getting started
           hr
           li
-            scroll-to href="#modal" | Modal
+            es-scroll-to href="#modal" | Modal
           li
-            scroll-to href="#scrollspy" | Scrollspy
+            es-scroll-to href="#popover" | Popover
+          li
+            es-scroll-to href="#scrollspy" | Scrollspy

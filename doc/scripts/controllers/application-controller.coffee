@@ -12,14 +12,18 @@ App.ApplicationController = Ember.Controller.extend
          '  }\n' +
          '});'
 
+  popover: '{{#es-popover}}\n' +
+           '  <button>Show popover</button>\n' +
+           '{{/es-popover}}'
+
   scrollspy: '<body data-spy="scroll" data-target=".navbar-example">\n' +
              '  ...\n' +
              '  <div class="navbar-example">\n' +
              '    <ul class="nav nav-tabs">\n' +
              '      <li>\n' +
-             '        {{#scroll-to href="#section-example"}}\n' +
+             '        {{#es-scroll-to href="#section-example"}}\n' +
              '        ...\n' +
-             '        {{/scroll-to}}\n' +
+             '        {{/es-scroll-to}}\n' +
              '      </li>\n' +
              '    </ul>\n' +
              '  </div>\n' +

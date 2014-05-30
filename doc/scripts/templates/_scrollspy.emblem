@@ -3,7 +3,7 @@
   p
     | With Ember you can't use directly the HTML anchors because the URL fragments are reserved to routes resolution.&nbsp;
       To permit Boostrap Scrollspy usage with Ember you should replace tag <code>a</code> by &nbsp;
-      <code>&#123;&#123;scroll-to&#125;&#125;</code>.
+      <code>&#123;&#123;es-scroll-to&#125;&#125;</code>.
 
   h3 Example
   .highlight
