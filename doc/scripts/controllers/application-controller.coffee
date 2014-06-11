@@ -6,8 +6,15 @@ App.ApplicationController = Ember.Controller.extend
 
   modal: 'App.ApplicationRoute = Ember.Route.extend({\n' +
          '  actions: {\n' +
-         '    showExampleModal: function() {\n' +
-         "      this.showModal('example', { controller: 'example-controller' });\n" +
+         '    openExampleModal: function() {\n' +
+         "      this.renderModal('example', {\n" +
+         "        into: 'application',\n" +
+         "        outlet: 'modal',\n" +
+         "        controller: 'example-controller'\n" +
+         '      });\n' +
+         '    }\n\n' +
+         '    closeExampleModal: function() {\n' +
+         "      this.disconnectOutlet('modal', { parentView: 'application' });\n" +
          '    }\n' +
          '  }\n' +
          '});'

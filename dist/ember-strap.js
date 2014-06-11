@@ -1,6 +1,6 @@
 /**
  * ember-strap
- * @version v0.0.1 - 2014-05-24
+ * @version v0.0.1 - 2014-06-11
  * @link https://github.com/pierrickrouxel/ember-strap
  * @author Pierrick Rouxel (pierrick.rouxel@me.com)
  * @license MIT License, http://www.opensource.org/licenses/MIT
@@ -66,7 +66,8 @@
       modalView = this.container.lookup('ember-strap:modal');
       modalView.set('templateName', templateName);
       modalView.setProperties(options);
-      return modalView.appendTo('body');
+      modalView.appendTo('body');
+      return modalView;
     },
     hideModal: function() {
       return this.container.lookup('ember-strap:modal').destroyElement();

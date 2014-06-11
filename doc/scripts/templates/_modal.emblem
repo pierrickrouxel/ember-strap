@@ -1,6 +1,17 @@
 .bs-docs-section#modal
   h1 Modal
 
+  div.bs-callout.bs-callout-info
+    h4 Design
+    p
+      | The modal implementation is inspired by the 
+        <a href="http://emberjs.com/guides/cookbook/user_interface_and_interaction/using_modal_dialogs/">
+        Ember Cookbook
+        </a>.
+  div.bs-callout.bs-callout-danger
+    h4 Caution
+    p EmberStrap adds a view <code>modal</code> to project. Do not override it.
+
   h3 Example
   .bs-example
     button.btn.btn-primary click="openExampleModal" Open modal
@@ -12,14 +23,9 @@
   h3 Methods
   p Methods available inside Ember.Route.
   h4
-    ' .showModal
+    ' .renderModal
     small (template, options)
   p Reveals the modal.
-
-  h4
-    ' .hideModal
-    small ()
-  p Hides the modal.
 
   h3 Options
   table.table.table-bordered.table-striped
@@ -31,6 +37,18 @@
         th Description
 
     tbody
+      tr
+        td into
+        td string
+        td null
+        td The template to render into.
+
+      tr
+        td outlet
+        td string
+        td 'main'
+        td The outlet to render into.
+
       tr
         td animation
         td boolean

@@ -1,4 +1,4 @@
 App.ApplicationRoute = Ember.Route.extend
   actions:
     openExampleModal: ->
-      @showModal('modal-example')
+      @renderModal('modal-example', into: 'application', outlet: 'modal')

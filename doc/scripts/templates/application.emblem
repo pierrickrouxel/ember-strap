@@ -47,3 +47,5 @@ header.navbar.navbar-static-top.bs-docs-nav
             scroll-to href="#modal" | Modal
           li
             scroll-to href="#scrollspy" | Scrollspy
+
+outlet modal

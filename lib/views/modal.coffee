@@ -27,13 +27,11 @@ EmberStrap.Modal = Ember.View.extend
     @$().off('hidden.bs.modal').modal('hide')
 
 Ember.Route.reopen
-  showModal: (templateName, options) ->
-    modalView = @container.lookup('ember-strap:modal')
-    modalView.set('templateName', templateName)
+  renderModal: (name, options) ->
+    options ||= {}
+
+    modalView = @container.lookup('view:modal')
     modalView.setProperties(options)
-    modalView.appendTo('body')
-    modalView
 
-  hideModal: ->
-    @container.lookup('ember-strap:modal').destroyElement()
-
+    options.view = 'modal'
+    @render(name, options)
