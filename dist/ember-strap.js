@@ -31,7 +31,7 @@
   Ember.Application.initializer({
     name: "ember-strap",
     initialize: function(container, application) {
-      container.register('ember-strap:modal', EmberStrap.Modal);
+      container.register('view:modal', EmberStrap.Modal);
       return container.register('component:scroll-to', EmberStrap.ScrollTo);
     }
   });
@@ -61,16 +61,13 @@
   });
 
   Ember.Route.reopen({
-    showModal: function(templateName, options) {
+    renderModal: function(name, options) {
       var modalView;
-      modalView = this.container.lookup('ember-strap:modal');
-      modalView.set('templateName', templateName);
+      options || (options = {});
+      modalView = this.container.lookup('view:modal');
       modalView.setProperties(options);
-      modalView.appendTo('body');
-      return modalView;
-    },
-    hideModal: function() {
-      return this.container.lookup('ember-strap:modal').destroyElement();
+      options.view = 'modal';
+      return this.render(name, options);
     }
   });
 
