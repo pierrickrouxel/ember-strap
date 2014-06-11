@@ -32,6 +32,7 @@ Ember.Route.reopen
     modalView.set('templateName', templateName)
     modalView.setProperties(options)
     modalView.appendTo('body')
+    modalView
 
   hideModal: ->
     @container.lookup('ember-strap:modal').destroyElement()
