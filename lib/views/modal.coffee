@@ -9,9 +9,9 @@ EmberStrap.Modal = Ember.View.extend
 
   classNames: ['modal']
   classNameBindings: ['animation:fade']
+  attributeBindings: ['backdrop:data-backdrop']
 
   animation: true
-  size: ''
 
   sizeClass: (->
     if @get('size') is 'small'

@@ -1,6 +1,6 @@
 /**
  * ember-strap
- * @version v0.0.1 - 2014-06-11
+ * @version v0.0.1 - 2014-06-12
  * @link https://github.com/pierrickrouxel/ember-strap
  * @author Pierrick Rouxel (pierrick.rouxel@me.com)
  * @license MIT License, http://www.opensource.org/licenses/MIT
@@ -31,7 +31,9 @@
   Ember.Application.initializer({
     name: "ember-strap",
     initialize: function(container, application) {
-      container.register('view:modal', EmberStrap.Modal);
+      container.register('view:modal', EmberStrap.Modal, {
+        singleton: true
+      });
       return container.register('component:scroll-to', EmberStrap.ScrollTo);
     }
   });
@@ -43,8 +45,8 @@
     layout: Ember.Handlebars.compile('<div {{bind-attr class=":modal-dialog view.sizeClass"}}> <div class="modal-content"> {{yield}} </div> </div>'),
     classNames: ['modal'],
     classNameBindings: ['animation:fade'],
+    attributeBindings: ['backdrop:data-backdrop'],
     animation: true,
-    size: '',
     sizeClass: (function() {
       if (this.get('size') === 'small') {
         return 'modal-sm';
