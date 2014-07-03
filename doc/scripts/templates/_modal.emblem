@@ -26,6 +26,14 @@
     ' .renderModal
     small (template, options)
   p Reveals the modal.
+  h4
+    ' .destroyModal
+    small ()
+  p Destroys the modal.
+
+  div.bs-callout.bs-callout-warning
+    h4 Warning
+    p EmberStrap can render only one modal at same time.
 
   h3 Options
   table.table.table-bordered.table-striped

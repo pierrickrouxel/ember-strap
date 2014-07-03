@@ -1,6 +1,6 @@
 /**
  * ember-strap
- * @version v0.0.1 - 2014-06-12
+ * @version v0.0.1 - 2014-07-03
  * @link https://github.com/pierrickrouxel/ember-strap
  * @author Pierrick Rouxel (pierrick.rouxel@me.com)
  * @license MIT License, http://www.opensource.org/licenses/MIT
@@ -31,9 +31,7 @@
   Ember.Application.initializer({
     name: "ember-strap",
     initialize: function(container, application) {
-      container.register('view:modal', EmberStrap.Modal, {
-        singleton: true
-      });
+      container.register('view:modal', EmberStrap.Modal);
       return container.register('component:scroll-to', EmberStrap.ScrollTo);
     }
   });
@@ -55,21 +53,35 @@
       }
     }).property('size'),
     didInsertElement: function() {
-      return this.$().on('hidden.bs.modal', $.proxy(this.destroyElement, this)).modal('show');
+      return this.$().on('hidden.bs.modal', (function(_this) {
+        return function() {
+          return _this.destroy();
+        };
+      })(this)).modal('show');
     },
     willDestroyElement: function() {
       return this.$().off('hidden.bs.modal').modal('hide');
+    },
+    destroy: function() {
+      this._super();
+      return this.container.unregister('view:modal');
     }
   });
 
   Ember.Route.reopen({
     renderModal: function(name, options) {
-      var modalView;
+      var view;
       options || (options = {});
-      modalView = this.container.lookup('view:modal');
-      modalView.setProperties(options);
+      view = EmberStrap.Modal.create(options);
+      this.container.register('view:modal', view, {
+        instantiate: false,
+        singleton: true
+      });
       options.view = 'modal';
       return this.render(name, options);
+    },
+    destroyModal: function() {
+      return this.container.lookup('view:modal').destroy();
     }
   });
 

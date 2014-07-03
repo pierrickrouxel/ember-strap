@@ -21,17 +21,24 @@ EmberStrap.Modal = Ember.View.extend
   ).property('size')
 
   didInsertElement: ->
-    @$().on('hidden.bs.modal', $.proxy(@destroyElement, this)).modal('show')
+    @$().on('hidden.bs.modal', => @destroy()).modal('show')
 
   willDestroyElement: ->
     @$().off('hidden.bs.modal').modal('hide')
+
+  destroy: ->
+    @_super()
+    @container.unregister('view:modal')
 
 Ember.Route.reopen
   renderModal: (name, options) ->
     options ||= {}
 
-    modalView = @container.lookup('view:modal')
-    modalView.setProperties(options)
+    view = EmberStrap.Modal.create(options)
+    @container.register('view:modal', view, instantiate: false, singleton: true)
 
     options.view = 'modal'
     @render(name, options)
+
+  destroyModal: ->
+    @container.lookup('view:modal').destroy()
