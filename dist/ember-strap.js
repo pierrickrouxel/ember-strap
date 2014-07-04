@@ -1,6 +1,6 @@
 /**
  * ember-strap
- * @version v0.0.1 - 2014-07-03
+ * @version v0.0.1 - 2014-07-04
  * @link https://github.com/pierrickrouxel/ember-strap
  * @author Pierrick Rouxel (pierrick.rouxel@me.com)
  * @license MIT License, http://www.opensource.org/licenses/MIT
@@ -12,7 +12,7 @@
 }).call(this);
 
 (function() {
-  EmberStrap.ScrollTo = Ember.Component.extend({
+  EmberStrap.ScrollToComponent = Ember.Component.extend({
     layout: Ember.Handlebars.compile('{{yield}}'),
     tagName: 'a',
     attributeBindings: ['href'],
@@ -31,8 +31,7 @@
   Ember.Application.initializer({
     name: "ember-strap",
     initialize: function(container, application) {
-      container.register('view:modal', EmberStrap.Modal);
-      return container.register('component:scroll-to', EmberStrap.ScrollTo);
+      return container.register('component:es-scroll-to', EmberStrap.ScrollToComponent);
     }
   });
 
@@ -64,7 +63,7 @@
     },
     destroy: function() {
       this._super();
-      return this.container.unregister('view:modal');
+      return this.container.unregister('view:es-modal');
     }
   });
 
@@ -73,16 +72,83 @@
       var view;
       options || (options = {});
       view = EmberStrap.Modal.create(options);
-      this.container.register('view:modal', view, {
+      this.container.register('view:es-modal', view, {
         instantiate: false,
         singleton: true
       });
-      options.view = 'modal';
+      options.view = 'es-modal';
       return this.render(name, options);
     },
     destroyModal: function() {
-      return this.container.lookup('view:modal').destroy();
+      return this.container.lookup('view:es-modal').destroy();
     }
+  });
+
+}).call(this);
+
+(function() {
+  var registerPopover, registeredPopovers, uuid;
+
+  uuid = 0;
+
+  registeredPopovers = {};
+
+  EmberStrap.PopoverView = Ember.View.extend({
+    title: null,
+    autoclose: true,
+    didInsertElement: function() {
+      $(this.get('sender')).popover({
+        html: true,
+        trigger: 'manual',
+        title: this.get('title'),
+        content: this.popoverView.get('element')
+      });
+      $(this.get('sender')).on('hidden.bs.popover', $.proxy(this.destroy, this));
+      if (this.get('autoclose')) {
+        return $(document).on('click', $.proxy(function() {
+          if (!$.contains(this.get('element'), event.target) && this.popoverView.$().parents('.popover')[0] !== event.target && !$.contains(this.popoverView.$().parents('.popover')[0], event.target)) {
+            return this.$().popover('hide');
+          }
+        }, this));
+      }
+    },
+    willDestroyElement: function() {
+      $(this.get('sender')).off('hidden.bs.popover');
+      $(this.get('sender')).popover('destroy');
+      return $(document).off('click', $.proxy(this.destroy, this));
+    },
+    click: function(event) {
+      event.preventDefault();
+      if (this.popoverView) {
+        if (this.get('autoclose')) {
+          return this.hide();
+        }
+      } else {
+        return this.show(event.target);
+      }
+    }
+  });
+
+  registerPopover = function(options) {
+    var popoverId, view;
+    popoverId = ++uuid;
+    view = EmberStrap.PopoverView.create(options);
+    options.html = true;
+    options.content = view.createElement().$();
+    Ember.run.scheduleOnce("afterRender", this, function() {
+      return $('[data-ember-strap-popover=' + popoverId + ']').popover(options);
+    });
+    view.on('willClearRender', function() {
+      return delete registeredPopovers[popoverId];
+    });
+    registeredPopovers[popoverId] = view;
+    return popoverId;
+  };
+
+  Ember.Handlebars.registerHelper('es-popover', function(options) {
+    var popoverId;
+    popoverId = registerPopover(options.hash);
+    return new Ember.Handlebars.SafeString('data-ember-strap-popover="' + popoverId + '"');
   });
 
 }).call(this);
