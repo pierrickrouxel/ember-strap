@@ -40,19 +40,27 @@ EmberStrap.PopoverView = Ember.View.extend
 registerPopover = (options) ->
   popoverId = ++uuid
 
-  view = EmberStrap.PopoverView.create(options)
-  options.html = true
-  options.content = view.createElement().$()
+  view = options.view.createChildView('es-popover', options.hash)
+
+  options.hash.html = true
+  options.hash.content = view.createElement().get('element')
+
   Ember.run.scheduleOnce "afterRender", @, ->
-    $('[data-ember-strap-popover=' + popoverId + ']').popover(options)
+    $('[data-ember-strap-popover=' + popoverId + ']').popover(options.hash)
 
   view.on 'willClearRender', ->
-    delete registeredPopovers[popoverId]
-
-  registeredPopovers[popoverId] = view
+    $('[data-ember-strap-popover=' + popoverId + ']').popover('destroy')
 
   popoverId
 
 Ember.Handlebars.registerHelper 'es-popover', (options) ->
-  popoverId = registerPopover(options.hash)
+  hash = options.hash
+
+  popover = {
+    view: options.data.view
+    hash: hash
+  }
+
+  popoverId = registerPopover(popover)
   new Ember.Handlebars.SafeString('data-ember-strap-popover="' + popoverId + '"')
+  

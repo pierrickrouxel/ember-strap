@@ -1,4 +1,4 @@
-EmberStrap.Modal = Ember.View.extend
+EmberStrap.ModalView = Ember.View.extend
   layout: Ember.Handlebars.compile(
     '<div {{bind-attr class=":modal-dialog view.sizeClass"}}>
       <div class="modal-content">
@@ -34,7 +34,7 @@ Ember.Route.reopen
   renderModal: (name, options) ->
     options ||= {}
 
-    view = EmberStrap.Modal.create(options)
+    view = EmberStrap.ModalView.create(options)
     @container.register('view:es-modal', view, instantiate: false, singleton: true)
 
     options.view = 'es-modal'
