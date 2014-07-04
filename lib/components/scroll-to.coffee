@@ -1,4 +1,4 @@
-EmberStrap.ScrollTo = Ember.Component.extend
+EmberStrap.ScrollToComponent = Ember.Component.extend
 
   layout: Ember.Handlebars.compile('{{yield}}')
 

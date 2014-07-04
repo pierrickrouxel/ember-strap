@@ -28,17 +28,17 @@ EmberStrap.Modal = Ember.View.extend
 
   destroy: ->
     @_super()
-    @container.unregister('view:modal')
+    @container.unregister('view:es-modal')
 
 Ember.Route.reopen
   renderModal: (name, options) ->
     options ||= {}
 
     view = EmberStrap.Modal.create(options)
-    @container.register('view:modal', view, instantiate: false, singleton: true)
+    @container.register('view:es-modal', view, instantiate: false, singleton: true)
 
-    options.view = 'modal'
+    options.view = 'es-modal'
     @render(name, options)
 
   destroyModal: ->
-    @container.lookup('view:modal').destroy()
+    @container.lookup('view:es-modal').destroy()

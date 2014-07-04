@@ -1,0 +1,40 @@
+.bs-docs-section#popover
+  h1 Popover
+  p
+    | EmberStrap provides a handlebars helper to bind a popover to an element of DOM.
+
+  h3 Example
+  .bs-example
+    button.btn.btn-primary{es-popover templateName="popover-example"} Show popover
+
+  .highlight
+    pre
+      code.html= popover
+
+  h3 Options
+  table.table.table-bordered.table-striped
+    thead
+      tr
+        th Name
+        th Type
+        th Default
+        th Description
+
+    tbody
+      tr
+        td autoclose
+        td boolean
+        td true
+        td A click on background or button closes the popover.
+
+      tr
+        td size
+        td string
+        td ''
+        td <code>small</code> or <code>large</code> to change modal size.
+
+      tr
+        td backdrop
+        td boolean or the string <code>'static'</code>
+        td true
+        td Includes a modal-backdrop element. Alternatively, specify <code>static</code> for a backdrop which doesn't close the modal on click.

@@ -8,10 +8,7 @@
         <a href="http://emberjs.com/guides/cookbook/user_interface_and_interaction/using_modal_dialogs/">
         Ember Cookbook
         </a>.
-  div.bs-callout.bs-callout-danger
-    h4 Caution
-    p EmberStrap adds a view <code>modal</code> to project. Do not override it.
-
+        
   h3 Example
   .bs-example
     button.btn.btn-primary click="openExampleModal" Open modal
@@ -68,3 +65,9 @@
         td string
         td ''
         td <code>small</code> or <code>large</code> to change modal size.
+
+      tr
+        td backdrop
+        td boolean or the string <code>'static'</code>
+        td true
+        td Includes a modal-backdrop element. Alternatively, specify <code>static</code> for a backdrop which doesn't close the modal on click.
