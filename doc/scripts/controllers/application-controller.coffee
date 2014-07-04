@@ -12,9 +12,7 @@ App.ApplicationController = Ember.Controller.extend
          '  }\n' +
          '});'
 
-  popover: '{{#es-popover}}\n' +
-           '  <button>Show popover</button>\n' +
-           '{{/es-popover}}'
+  popover: '<button {{es-popover}}>Show popover</button>'
 
   scrollspy: '<body data-spy="scroll" data-target=".navbar-example">\n' +
              '  ...\n' +

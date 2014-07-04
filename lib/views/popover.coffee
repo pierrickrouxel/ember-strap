@@ -1,3 +1,6 @@
+uuid = 0
+registeredPopovers = {}
+
 EmberStrap.PopoverView = Ember.View.extend
   title: null
   autoclose: true
@@ -34,14 +37,22 @@ EmberStrap.PopoverView = Ember.View.extend
     else
       @show(event.target)
 
-Ember.Route.reopen
-  showPopover: (sender, templateName, options) ->
-    popoverView = @container.lookup('ember-strap:popover')
-    popoverView.set('templateName', templateName)
-    popoverView.set('sender', sender)
-    popoverView.setProperties(options)
-    popoverView.createElement()
-    $(sender).popover('show')
+registerPopover = (options) ->
+  popoverId = ++uuid
 
-  hidePopover: (sender) ->
-    $(sender).popover('hide')
+  view = EmberStrap.PopoverView.create(options)
+  options.html = true
+  options.content = view.createElement().$()
+  Ember.run.scheduleOnce "afterRender", @, ->
+    $('[data-ember-strap-popover=' + popoverId + ']').popover(options)
+
+  view.on 'willClearRender', ->
+    delete registeredPopovers[popoverId]
+
+  registeredPopovers[popoverId] = view
+
+  popoverId
+
+Ember.Handlebars.registerHelper 'es-popover', (options) ->
+  popoverId = registerPopover(options.hash)
+  new Ember.Handlebars.SafeString('data-ember-strap-popover="' + popoverId + '"')

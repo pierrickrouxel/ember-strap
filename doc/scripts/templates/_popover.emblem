@@ -1,23 +1,15 @@
 .bs-docs-section#popover
   h1 Popover
   p
-    | EmberStrap provides the <code>es-popover</code> component. All what you put inside become clickable to show popover.
+    | EmberStrap provides a handlebars helper to bind a popover to an element of DOM.
 
   h3 Example
   .bs-example
-    button.btn.btn-primary click="showExamplePopover this" Show popover
+    button.btn.btn-primary{es-popover templateName="popover-example"} Show popover
 
   .highlight
     pre
       code.html= popover
-
-  h3 Methods
-  p Methods available inside contentController view.
-
-  h4
-    '.hidePopover
-    small ()
-  p Hides the popover.
 
   h3 Options
   table.table.table-bordered.table-striped
