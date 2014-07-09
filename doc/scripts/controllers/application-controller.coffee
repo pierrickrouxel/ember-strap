@@ -21,6 +21,8 @@ App.ApplicationController = Ember.Controller.extend
 
   popover: '<button {{es-popover}}>Show popover</button>'
 
+  destroyPopover: '<button {{action destroyPopover on="click" target="view"}}>Close</button>'
+
   scrollspy: '<body data-spy="scroll" data-target=".navbar-example">\n' +
              '  ...\n' +
              '  <div class="navbar-example">\n' +

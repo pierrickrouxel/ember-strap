@@ -2,7 +2,9 @@ uuid = 0
 registeredPopovers = {}
 
 EmberStrap.PopoverView = Ember.View.extend
-  autoclose: true
+  actions:
+    destroyPopover: ->
+      @destroy()
 
 registerPopover = (options) ->
   popoverId = ++uuid

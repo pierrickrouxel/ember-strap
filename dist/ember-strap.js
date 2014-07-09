@@ -95,7 +95,11 @@
   registeredPopovers = {};
 
   EmberStrap.PopoverView = Ember.View.extend({
-    autoclose: true
+    actions: {
+      destroyPopover: function() {
+        return this.destroy();
+      }
+    }
   });
 
   registerPopover = function(options) {
