@@ -10,9 +10,9 @@ registerPopover = (options) ->
   popoverId = ++uuid
 
   # Fix container property override
-  viewHash = options.hash
-  viewHash.popoverId = popoverId
+  viewHash = $.extend(popoverId: popoverId, options.hash)
   delete viewHash.container
+  
   view = options.view.createChildView('es-popover', viewHash)
 
   options.hash.html = true

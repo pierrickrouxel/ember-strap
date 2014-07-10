@@ -105,8 +105,9 @@
   registerPopover = function(options) {
     var popoverId, view, viewHash;
     popoverId = ++uuid;
-    viewHash = options.hash;
-    viewHash.popoverId = popoverId;
+    viewHash = $.extend({
+      popoverId: popoverId
+    }, options.hash);
     delete viewHash.container;
     view = options.view.createChildView('es-popover', viewHash);
     options.hash.html = true;
