@@ -31,6 +31,7 @@
   Ember.Application.initializer({
     name: "ember-strap",
     initialize: function(container, application) {
+      container.register('view:es-modal', EmberStrap.ModalView);
       container.register('view:es-popover', EmberStrap.PopoverView);
       return container.register('component:es-scroll-to', EmberStrap.ScrollToComponent);
     }
@@ -39,6 +40,10 @@
 }).call(this);
 
 (function() {
+  var registeredModal;
+
+  registeredModal = null;
+
   EmberStrap.ModalView = Ember.View.extend({
     layout: Ember.Handlebars.compile('<div {{bind-attr class=":modal-dialog view.sizeClass"}}> <div class="modal-content"> {{yield}} </div> </div>'),
     classNames: ['modal'],
@@ -64,21 +69,21 @@
     },
     destroy: function() {
       this._super();
-      return this.container.unregister('view:es-modal');
+      return registeredModal = null;
     }
   });
 
   Ember.Route.reopen({
-    renderModal: function(name, options) {
-      var view;
+    renderModal: function(options) {
+      var parentView;
+      Ember.assert('Modal is already initialized. You should destroy it before rerender.', !registeredModal);
       options || (options = {});
-      view = EmberStrap.ModalView.create(options);
-      this.container.register('view:es-modal', view, {
-        instantiate: false,
-        singleton: true
-      });
-      options.view = 'es-modal';
-      return this.render(name, options);
+      parentView = this.container.lookup('view:toplevel');
+      registeredModal = parentView.createChildView('es-modal', options);
+      return registeredModal.appendTo('body');
+    },
+    destroyModal: function() {
+      return registeredModal.destroy();
     }
   });
 

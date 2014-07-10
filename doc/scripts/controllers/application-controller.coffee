@@ -7,14 +7,12 @@ App.ApplicationController = Ember.Controller.extend
   modal: 'App.ApplicationRoute = Ember.Route.extend({\n' +
          '  actions: {\n' +
          '    openExampleModal: function() {\n' +
-         "      this.renderModal('example', {\n" +
-         "        into: 'application',\n" +
-         "        outlet: 'modal',\n" +
-         "        controller: 'example-controller'\n" +
+         "      this.renderModal({\n" +
+         "        templateName: 'example',\n" +
          '      });\n' +
          '    }\n\n' +
          '    closeExampleModal: function() {\n' +
-         "      this.disconnectOutlet('modal');\n" +
+         "      this.destroyModal();\n" +
          '    }\n' +
          '  }\n' +
          '});'

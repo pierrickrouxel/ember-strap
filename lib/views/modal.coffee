@@ -1,3 +1,5 @@
+registeredModal = null
+
 EmberStrap.ModalView = Ember.View.extend
   layout: Ember.Handlebars.compile(
     '<div {{bind-attr class=":modal-dialog view.sizeClass"}}>
@@ -28,14 +30,17 @@ EmberStrap.ModalView = Ember.View.extend
 
   destroy: ->
     @_super()
-    @container.unregister('view:es-modal')
+    registeredModal = null
 
 Ember.Route.reopen
-  renderModal: (name, options) ->
+  renderModal: (options) ->
+    Ember.assert('Modal is already initialized. You should destroy it before rerender.', !registeredModal)
+
     options ||= {}
 
-    view = EmberStrap.ModalView.create(options)
-    @container.register('view:es-modal', view, instantiate: false, singleton: true)
+    parentView = @container.lookup('view:toplevel')
+    registeredModal = parentView.createChildView('es-modal', options)
+    registeredModal.appendTo('body')
 
-    options.view = 'es-modal'
-    @render(name, options)
+  destroyModal: ->
+    registeredModal.destroy()

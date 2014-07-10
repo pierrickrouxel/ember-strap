@@ -21,8 +21,14 @@
   p Methods available inside Ember.Route.
   h4
     ' .renderModal
-    small (template, options)
-  p Reveals the modal.
+    small (options)
+  p 
+    | Reveals the modal.<br>
+
+  h4
+    ' .destroyModal
+    small ()
+  p Destroys the modal.
 
   div.bs-callout.bs-callout-warning
     h4 Warning
@@ -39,16 +45,16 @@
 
     tbody
       tr
-        td into
+        td templateName
         td string
         td null
         td The template to render into.
 
       tr
-        td outlet
-        td string
-        td 'main'
-        td The outlet to render into.
+        td controller
+        td Ember.Controller
+        td null
+        td The controller attached to modal content.
 
       tr
         td animation
@@ -56,14 +62,4 @@
         td true
         td Apply a CSS fade transition to the modal.
 
-      tr
-        td size
-        td string
-        td ''
-        td <code>small</code> or <code>large</code> to change modal size.
-
-      tr
-        td backdrop
-        td boolean or the string <code>'static'</code>
-        td true
-        td Includes a modal-backdrop element. Alternatively, specify <code>static</code> for a backdrop which doesn't close the modal on click.
+  p You can also use all bootstrap modal options. See <a href="http://getbootstrap.com/javascript/#modals">bootstrap documentation</a>.
