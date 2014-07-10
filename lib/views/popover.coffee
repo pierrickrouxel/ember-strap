@@ -3,8 +3,8 @@ registeredPopovers = {}
 
 EmberStrap.PopoverView = Ember.View.extend
   actions:
-    destroyPopover: ->
-      @destroy()
+    hidePopover: ->
+      $('[data-ember-strap-popover=' + @get('popoverId') + ']').popover('hide')
 
 registerPopover = (options) ->
   popoverId = ++uuid
@@ -16,6 +16,7 @@ registerPopover = (options) ->
 
   options.hash.html = true
   options.hash.content = view.createElement().get('element')
+  options.hash.popoverId = popoverId
 
   Ember.run.scheduleOnce "afterRender", @, ->
     $('[data-ember-strap-popover=' + popoverId + ']').popover(options.hash)

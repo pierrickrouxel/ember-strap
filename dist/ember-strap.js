@@ -1,6 +1,6 @@
 /**
  * ember-strap
- * @version v0.0.1 - 2014-07-09
+ * @version v0.0.1 - 2014-07-10
  * @link https://github.com/pierrickrouxel/ember-strap
  * @author Pierrick Rouxel (pierrick.rouxel@me.com)
  * @license MIT License, http://www.opensource.org/licenses/MIT
@@ -96,8 +96,8 @@
 
   EmberStrap.PopoverView = Ember.View.extend({
     actions: {
-      destroyPopover: function() {
-        return this.destroy();
+      hidePopover: function() {
+        return $('[data-ember-strap-popover=' + this.get('popoverId') + ']').popover('hide');
       }
     }
   });
@@ -110,6 +110,7 @@
     view = options.view.createChildView('es-popover', viewHash);
     options.hash.html = true;
     options.hash.content = view.createElement().get('element');
+    options.hash.popoverId = popoverId;
     Ember.run.scheduleOnce("afterRender", this, function() {
       return $('[data-ember-strap-popover=' + popoverId + ']').popover(options.hash);
     });
