@@ -106,11 +106,11 @@
     var popoverId, view, viewHash;
     popoverId = ++uuid;
     viewHash = options.hash;
+    viewHash.popoverId = popoverId;
     delete viewHash.container;
     view = options.view.createChildView('es-popover', viewHash);
     options.hash.html = true;
     options.hash.content = view.createElement().get('element');
-    options.hash.popoverId = popoverId;
     Ember.run.scheduleOnce("afterRender", this, function() {
       return $('[data-ember-strap-popover=' + popoverId + ']').popover(options.hash);
     });

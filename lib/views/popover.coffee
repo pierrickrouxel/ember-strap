@@ -11,12 +11,12 @@ registerPopover = (options) ->
 
   # Fix container property override
   viewHash = options.hash
+  viewHash.popoverId = popoverId
   delete viewHash.container
   view = options.view.createChildView('es-popover', viewHash)
 
   options.hash.html = true
   options.hash.content = view.createElement().get('element')
-  options.hash.popoverId = popoverId
 
   Ember.run.scheduleOnce "afterRender", @, ->
     $('[data-ember-strap-popover=' + popoverId + ']').popover(options.hash)
