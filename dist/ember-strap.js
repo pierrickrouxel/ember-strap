@@ -79,9 +79,6 @@
       });
       options.view = 'es-modal';
       return this.render(name, options);
-    },
-    destroyModal: function() {
-      return this.container.lookup('view:es-modal').destroy();
     }
   });
 
@@ -109,11 +106,14 @@
       popoverId: popoverId
     }, options.hash);
     delete viewHash.container;
-    view = options.view.createChildView('es-popover', viewHash);
+    view = options.parentView.createChildView('es-popover', viewHash);
     options.hash.html = true;
     options.hash.content = view.createElement().get('element');
-    Ember.run.scheduleOnce("afterRender", this, function() {
+    Ember.run.scheduleOnce('afterRender', this, function() {
       return $('[data-ember-strap-popover=' + popoverId + ']').popover(options.hash);
+    });
+    options.parentView.on('willClearRender', function() {
+      return view.destroy();
     });
     view.on('willClearRender', function() {
       return $('[data-ember-strap-popover=' + popoverId + ']').popover('destroy');
@@ -125,7 +125,7 @@
     var hash, popover, popoverId;
     hash = options.hash;
     popover = {
-      view: options.data.view,
+      parentView: options.data.view,
       hash: hash
     };
     popoverId = registerPopover(popover);

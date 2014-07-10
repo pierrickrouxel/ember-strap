@@ -39,6 +39,3 @@ Ember.Route.reopen
 
     options.view = 'es-modal'
     @render(name, options)
-
-  destroyModal: ->
-    @container.lookup('view:es-modal').destroy()

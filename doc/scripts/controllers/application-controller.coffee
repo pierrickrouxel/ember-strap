@@ -14,7 +14,7 @@ App.ApplicationController = Ember.Controller.extend
          '      });\n' +
          '    }\n\n' +
          '    closeExampleModal: function() {\n' +
-         "      this.destroyModal();\n" +
+         "      this.disconnectOutlet('modal');\n" +
          '    }\n' +
          '  }\n' +
          '});'

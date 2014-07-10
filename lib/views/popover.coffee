@@ -13,13 +13,16 @@ registerPopover = (options) ->
   viewHash = $.extend(popoverId: popoverId, options.hash)
   delete viewHash.container
   
-  view = options.view.createChildView('es-popover', viewHash)
+  view = options.parentView.createChildView('es-popover', viewHash)
 
   options.hash.html = true
   options.hash.content = view.createElement().get('element')
 
-  Ember.run.scheduleOnce "afterRender", @, ->
+  Ember.run.scheduleOnce 'afterRender', @, ->
     $('[data-ember-strap-popover=' + popoverId + ']').popover(options.hash)
+
+  options.parentView.on 'willClearRender', ->
+    view.destroy()
 
   view.on 'willClearRender', ->
     $('[data-ember-strap-popover=' + popoverId + ']').popover('destroy')
@@ -30,7 +33,7 @@ Ember.Handlebars.registerHelper 'es-popover', (options) ->
   hash = options.hash
 
   popover = {
-    view: options.data.view
+    parentView: options.data.view
     hash: hash
   }
 
