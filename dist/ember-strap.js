@@ -31,7 +31,9 @@
   Ember.Application.initializer({
     name: "ember-strap",
     initialize: function(container, application) {
-      container.register('view:es-modal', EmberStrap.ModalView);
+      container.register('view:es-modal', EmberStrap.ModalView, {
+        singleton: true
+      });
       container.register('view:es-popover', EmberStrap.PopoverView);
       return container.register('component:es-scroll-to', EmberStrap.ScrollToComponent);
     }
@@ -57,34 +59,31 @@
         return 'modal-lg';
       }
     }).property('size'),
-    didInsertElement: function() {
-      return this.$().on('hidden.bs.modal', (function(_this) {
-        return function() {
-          return _this.destroy();
-        };
-      })(this)).modal('show');
+    showModal: function() {
+      return this.$().modal('show');
     },
-    willDestroyElement: function() {
-      return this.$().off('hidden.bs.modal').modal('hide');
-    },
-    destroy: function() {
-      this._super();
-      return registeredModal = null;
+    hideModal: function() {
+      return this.$().modal('hide');
     }
   });
 
   Ember.Route.reopen({
     renderModal: function(name, options) {
-      var parentView;
-      Ember.assert('Modal is already initialized. You should destroy it before rerender.', !registeredModal);
       options || (options = {});
-      options.templateName = name;
-      parentView = this.container.lookup('view:toplevel');
-      registeredModal = parentView.createChildView('es-modal', options);
-      return registeredModal.appendTo('body');
+      options.view = 'es-modal';
+      if (!registeredModal) {
+        this.render(name, options);
+        registeredModal = this.container.lookup('view:es-modal');
+      } else {
+        registeredModal.set('templateName', name);
+      }
+      registeredModal.setProperties(options);
+      return Ember.run.scheduleOnce('afterRender', this, function() {
+        return registeredModal.showModal();
+      });
     },
     destroyModal: function() {
-      return registeredModal.destroy();
+      return registeredModal.hideModal();
     }
   });
 

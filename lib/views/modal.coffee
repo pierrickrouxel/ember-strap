@@ -22,26 +22,26 @@ EmberStrap.ModalView = Ember.View.extend
       'modal-lg'
   ).property('size')
 
-  didInsertElement: ->
-    @$().on('hidden.bs.modal', => @destroy()).modal('show')
+  showModal: ->
+    @$().modal('show')
 
-  willDestroyElement: ->
-    @$().off('hidden.bs.modal').modal('hide')
-
-  destroy: ->
-    @_super()
-    registeredModal = null
+  hideModal: ->
+    @$().modal('hide')
 
 Ember.Route.reopen
   renderModal: (name, options) ->
-    Ember.assert('Modal is already initialized. You should destroy it before rerender.', !registeredModal)
-
     options ||= {}
-    options.templateName = name
+    options.view = 'es-modal'
 
-    parentView = @container.lookup('view:toplevel')
-    registeredModal = parentView.createChildView('es-modal', options)
-    registeredModal.appendTo('body')
+    unless registeredModal
+      @render(name, options)
+      registeredModal = @container.lookup('view:es-modal')
+    else
+      registeredModal.set('templateName', name)
+    
+    registeredModal.setProperties(options)
+    Ember.run.scheduleOnce 'afterRender', this, ->
+      registeredModal.showModal()
 
   destroyModal: ->
-    registeredModal.destroy()
+    registeredModal.hideModal()

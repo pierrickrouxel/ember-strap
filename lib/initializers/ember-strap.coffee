@@ -2,6 +2,6 @@ Ember.Application.initializer
   name: "ember-strap"
 
   initialize: (container, application) ->
-    container.register('view:es-modal', EmberStrap.ModalView)
+    container.register('view:es-modal', EmberStrap.ModalView, singleton: true)
     container.register('view:es-popover', EmberStrap.PopoverView)
     container.register('component:es-scroll-to', EmberStrap.ScrollToComponent)
