@@ -74,10 +74,11 @@
   });
 
   Ember.Route.reopen({
-    renderModal: function(options) {
+    renderModal: function(name, options) {
       var parentView;
       Ember.assert('Modal is already initialized. You should destroy it before rerender.', !registeredModal);
       options || (options = {});
+      options.templateName = name;
       parentView = this.container.lookup('view:toplevel');
       registeredModal = parentView.createChildView('es-modal', options);
       return registeredModal.appendTo('body');

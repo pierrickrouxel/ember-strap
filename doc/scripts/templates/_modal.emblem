@@ -21,7 +21,7 @@
   p Methods available inside Ember.Route.
   h4
     ' .renderModal
-    small (options)
+    small (name, options)
   p 
     | Reveals the modal.<br>
 
@@ -44,18 +44,6 @@
         th Description
 
     tbody
-      tr
-        td templateName
-        td string
-        td null
-        td The template to render into.
-
-      tr
-        td controller
-        td Ember.Controller
-        td null
-        td The controller attached to modal content.
-
       tr
         td animation
         td boolean

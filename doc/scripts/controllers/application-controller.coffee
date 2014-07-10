@@ -7,8 +7,8 @@ App.ApplicationController = Ember.Controller.extend
   modal: 'App.ApplicationRoute = Ember.Route.extend({\n' +
          '  actions: {\n' +
          '    openExampleModal: function() {\n' +
-         "      this.renderModal({\n" +
-         "        templateName: 'example',\n" +
+         "      this.renderModal('modal-example', {\n" +
+         "        animation: true\n" +
          '      });\n' +
          '    }\n\n' +
          '    closeExampleModal: function() {\n' +

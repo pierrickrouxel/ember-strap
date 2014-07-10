@@ -33,10 +33,11 @@ EmberStrap.ModalView = Ember.View.extend
     registeredModal = null
 
 Ember.Route.reopen
-  renderModal: (options) ->
+  renderModal: (name, options) ->
     Ember.assert('Modal is already initialized. You should destroy it before rerender.', !registeredModal)
 
     options ||= {}
+    options.templateName = name
 
     parentView = @container.lookup('view:toplevel')
     registeredModal = parentView.createChildView('es-modal', options)
