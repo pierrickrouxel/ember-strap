@@ -27,9 +27,7 @@ App.ApplicationController = Ember.Controller.extend
              '  <div class="navbar-example">\n' +
              '    <ul class="nav nav-tabs">\n' +
              '      <li>\n' +
-             '        {{#es-scroll-to href="#section-example"}}\n' +
              '        ...\n' +
-             '        {{/es-scroll-to}}\n' +
              '      </li>\n' +
              '    </ul>\n' +
              '  </div>\n' +

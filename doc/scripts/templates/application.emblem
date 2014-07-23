@@ -39,16 +39,16 @@ header.navbar.navbar-static-top.bs-docs-nav
       partial "scrollspy"
 
     .col-md-3
-      .bs-docs-sidebar.hidden-print
+      .bs-docs-sidebar.hidden-print data-spy="affix" data-offset-top="333"
         ul.nav.bs-docs-sidenav
           li
-            es-scroll-to href="#getting-started" | Getting started
+            a href="#getting-started" Getting started
           hr
           li
-            es-scroll-to href="#modal" | Modal
+            a href="#modal" Modal
           li
-            es-scroll-to href="#popover" | Popover
+            a href="#popover" Popover
           li
-            es-scroll-to href="#scrollspy" | Scrollspy
+            a href="#scrollspy" Scrollspy
             
 outlet modal
