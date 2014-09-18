@@ -1,6 +1,6 @@
 /**
  * ember-strap
- * @version v0.0.1 - 2014-07-10
+ * @version v0.0.1 - 2014-09-18
  * @link https://github.com/pierrickrouxel/ember-strap
  * @author Pierrick Rouxel (pierrick.rouxel@me.com)
  * @license MIT License, http://www.opensource.org/licenses/MIT
@@ -12,30 +12,33 @@
 }).call(this);
 
 (function() {
-  EmberStrap.ScrollToComponent = Ember.Component.extend({
-    layout: Ember.Handlebars.compile('{{yield}}'),
-    tagName: 'a',
-    attributeBindings: ['href'],
-    click: function(event) {
-      event.preventDefault();
-      return this.scrollTo(this.$().attr('href'));
-    },
-    scrollTo: function(id) {
-      return $('*[data-spy="scroll"]').scrollTop($(id).offset().top);
-    }
-  });
+  var hackScrollSpy;
 
-}).call(this);
+  hackScrollSpy = function() {
+    return $(document).on('click', function(e) {
+      return $('*[data-spy="scroll"]').each(function() {
+        var $anchor, $target, spyTarget;
+        spyTarget = $(this).data('target');
+        $target = $(e.target);
+        if ($target.parent(spyTarget)) {
+          e.preventDefault();
+          $anchor = $($target.attr('href'));
+          if ($anchor.length) {
+            return $(this).scrollTop($anchor.offset().top);
+          }
+        }
+      });
+    });
+  };
 
-(function() {
   Ember.Application.initializer({
     name: "ember-strap",
     initialize: function(container, application) {
+      hackScrollSpy();
       container.register('view:es-modal', EmberStrap.ModalView, {
         singleton: true
       });
-      container.register('view:es-popover', EmberStrap.PopoverView);
-      return container.register('component:es-scroll-to', EmberStrap.ScrollToComponent);
+      return container.register('view:es-popover', EmberStrap.PopoverView);
     }
   });
 
@@ -90,11 +93,9 @@
 }).call(this);
 
 (function() {
-  var registerPopover, registeredPopovers, uuid;
+  var registerPopover, uuid;
 
   uuid = 0;
-
-  registeredPopovers = {};
 
   EmberStrap.PopoverView = Ember.View.extend({
     actions: {
@@ -115,7 +116,14 @@
     options.hash.html = true;
     options.hash.content = view.createElement().get('element');
     Ember.run.scheduleOnce('afterRender', this, function() {
-      return $('[data-ember-strap-popover=' + popoverId + ']').popover(options.hash);
+      var $popover;
+      $popover = $('[data-ember-strap-popover=' + popoverId + ']').popover(options.hash);
+      $popover.on('shown.bs.popover', function() {
+        return view.get('childViews').forEach(function(childView) {
+          return childView.rerender();
+        });
+      });
+      return $popover;
     });
     options.parentView.on('willClearRender', function() {
       return view.destroy();
