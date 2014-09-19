@@ -19,7 +19,8 @@
         "url": "https://github.com/pierrickrouxel/ember-strap"
     },
     "scripts": {
-        "postinstall": "node_modules/.bin/bower install"
+        "postinstall": "node_modules/.bin/bower install",
+        "build": "grunt"
     },
     "devDependencies": {
         "bower": "^1.2.8",
