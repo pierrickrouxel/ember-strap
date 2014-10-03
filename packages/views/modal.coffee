@@ -1,7 +1,7 @@
 registeredModal = null
 
 EmberStrap.ModalView = Ember.View.extend
-  layout: Ember.Handlebars.compile(
+  layout: precompileTemplate(
     '<div {{bind-attr class=":modal-dialog view.sizeClass"}}>
       <div class="modal-content">
         {{yield}}
@@ -38,7 +38,7 @@ Ember.Route.reopen
       registeredModal = @container.lookup('view:es-modal')
     else
       registeredModal.set('templateName', name)
-    
+
     registeredModal.setProperties(options)
     Ember.run.scheduleOnce 'afterRender', this, ->
       registeredModal.showModal()

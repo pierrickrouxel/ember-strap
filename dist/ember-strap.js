@@ -1,11 +1,10 @@
 /**
  * ember-strap
- * @version v0.0.1 - 2014-09-18
+ * @version v0.0.1 - 2014-10-03
  * @link https://github.com/pierrickrouxel/ember-strap
  * @author Pierrick Rouxel (pierrick.rouxel@me.com)
  * @license MIT License, http://www.opensource.org/licenses/MIT
  */
-
 (function() {
   window.EmberStrap = Ember.Namespace.create();
 
@@ -50,7 +49,23 @@
   registeredModal = null;
 
   EmberStrap.ModalView = Ember.View.extend({
-    layout: Ember.Handlebars.compile('<div {{bind-attr class=":modal-dialog view.sizeClass"}}> <div class="modal-content"> {{yield}} </div> </div>'),
+    layout: Ember.Handlebars.template(function anonymous(Handlebars,depth0,helpers,partials,data) {
+this.compilerInfo = [4,'>= 1.0.0'];
+helpers = this.merge(helpers, Ember.Handlebars.helpers); data = data || {};
+  var buffer = '', stack1, escapeExpression=this.escapeExpression;
+
+
+  data.buffer.push("<div ");
+  data.buffer.push(escapeExpression(helpers['bind-attr'].call(depth0, {hash:{
+    'class': (":modal-dialog view.sizeClass")
+  },hashTypes:{'class': "STRING"},hashContexts:{'class': depth0},contexts:[],types:[],data:data})));
+  data.buffer.push("> <div class=\"modal-content\"> ");
+  stack1 = helpers._triageMustache.call(depth0, "yield", {hash:{},hashTypes:{},hashContexts:{},contexts:[depth0],types:["ID"],data:data});
+  if(stack1 || stack1 === 0) { data.buffer.push(stack1); }
+  data.buffer.push(" </div> </div>");
+  return buffer;
+  
+}),
     classNames: ['modal'],
     classNameBindings: ['animation:fade'],
     attributeBindings: ['backdrop:data-backdrop'],

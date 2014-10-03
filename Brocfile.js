@@ -1,4 +1,4 @@
-var filterCoffeeScript = require('broccoli-coffee');
+var compileCoffee = require('broccoli-coffee');
 var compileSass = require('broccoli-sass');
 var filterTemplate = require('broccoli-ember-emblem');
 var uglifyJavaScript = require('broccoli-uglify-js');
@@ -7,81 +7,51 @@ var pickFiles = require('broccoli-static-compiler');
 var concat = require('broccoli-concat');
 var select = require('broccoli-select');
 var moveFile = require('broccoli-file-mover');
-var env = require('broccoli-env').getEnv();
+var removeFile = require('broccoli-file-remover');
 
-// Add banner to file
+var inlineTemplatePrecompiler = require('./lib/broccoli-ember-inline-template-precompiler');
+var banner = require('./lib/broccoli-banner')
 
-function concatBanner(tree, options) {
-    var writeFile = require('broccoli-file-creator');
-    var pkg = require('./package.json');
-
-    var banner = '/**\n' +
-        ' * ' + pkg.name + '\n' +
-        ' * @version v' + pkg.version + ' - ' + new Date().toISOString().substr(0, 10) + '\n' +
-        ' * @link ' +  pkg.homepage + '\n' +
-        ' * @author ' + pkg.author.name + ' (' + pkg.author.email + ')\n' +
-        ' * @license MIT License, http://www.opensource.org/licenses/MIT\n' +
-        ' */\n';
-
-    banner = writeFile('banner.js', banner);
-
-    options.inputFiles.forEach(function(inputFile) {
-
-        var resultTree = concat(mergeTrees([tree, banner]), {
-            inputFiles: ['banner.js', inputFile],
-            outputFile: '/' + inputFile
-        });
-
-        tree = mergeTrees([tree, resultTree], { overwrite: true });
-    });
-    return tree;
-}
+var env = process.argv[2] == 'build' ? 'production' : 'development';
 
 // Library
+var packages = compileCoffee('packages');
 
-var lib = 'lib';
-lib = filterCoffeeScript(lib);
+packages = inlineTemplatePrecompiler(packages);
 
-var libJs = concat(lib, {
-    inputFiles: ['ember-strap.js', '**/*.js'],
-    wrapInEval: env !== 'production',
-    outputFile: '/ember-strap.js'
+packages = concat(packages, {
+  inputFiles: ['ember-strap.js', '**/*.js'],
+  wrapInEval: env !== 'production',
+  outputFile: '/ember-strap.js'
 });
 
-var minLibJs = moveFile(libJs, {
-    srcFile: 'ember-strap.js',
-    destFile: 'ember-strap.min.js',
-    copy: true
-});
+// Build dist
+if (env == 'production') {
+  minPackages = moveFile(packages, {
+      srcFile: 'ember-strap.js',
+      destFile: 'ember-strap.min.js'
+  });
 
-minLibJs = select(minLibJs, {
-    acceptFiles: [ '**/*.min.js' ]
-});
+  minPackages = uglifyJavaScript(minPackages, {
+      // mangle: false,
+      // compress: false
+  });
 
-minLibJs = uglifyJavaScript(minLibJs, {
-    // mangle: false,
-    // compress: false
-});
+  packages = mergeTrees([packages, minPackages]);
 
-libJs = mergeTrees([libJs, minLibJs]);
-
-libJs = concatBanner(libJs, {
-    inputFiles: ['ember-strap.js', 'ember-strap.min.js']
-});
-
+  packages = banner(packages);
+}
 
 // Documentation
-
 if (env !== 'production') {
     var publicFiles = 'doc/public';
 
     var bowerDependenciesJs = concat('bower_components', {
         inputFiles: [
             'jquery/jquery.js',
-            'handlebars/handlebars.js',
+            'handlebars/handlebars.runtime.js',
             'ember/ember.js',
-            'bootstrap-sass-official/vendor/assets/javascripts/bootstrap/tooltip.js',
-			'bootstrap-sass-official/vendor/assets/javascripts/bootstrap/*.js',
+			      'bootstrap-sass-official/assets/javascripts/bootstrap.js',
             'highlightjs/highlight.pack.js'
         ],
         outputFile: '/dependencies.js'
@@ -97,7 +67,7 @@ if (env !== 'production') {
     var doc = 'doc';
     var docCss = compileSass([doc].concat('bower_components'), 'styles/doc.scss', 'doc.css');
 
-    var docJs = filterCoffeeScript(doc);
+    var docJs = compileCoffee(doc);
     docJs = filterTemplate(docJs, { stripPathFromName: 'scripts/templates/' });
 
     docJs = concat(docJs, {
@@ -110,7 +80,7 @@ if (env !== 'production') {
         destDir: 'fonts'
     });
 
-    libJs = mergeTrees([libJs, docJs, docCss, docFonts, bowerDependenciesJs, bowerDependenciesCss, publicFiles]);
+    packages = mergeTrees([packages, docJs, docCss, docFonts, bowerDependenciesJs, bowerDependenciesCss, publicFiles]);
 }
 
-module.exports = libJs;
+module.exports = packages;

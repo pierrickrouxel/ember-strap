@@ -11,7 +11,7 @@ registerPopover = (options) ->
   # Fix container property override
   viewHash = $.extend(popoverId: popoverId, options.hash)
   delete viewHash.container
-  
+
   view = options.parentView.createChildView('es-popover', viewHash)
 
   options.hash.html = true
@@ -43,4 +43,3 @@ Ember.Handlebars.registerHelper 'es-popover', (options) ->
 
   popoverId = registerPopover(popover)
   new Ember.Handlebars.SafeString('data-ember-strap-popover="' + popoverId + '"')
-  
