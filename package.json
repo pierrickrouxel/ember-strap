@@ -20,7 +20,7 @@
   },
   "scripts": {
     "postinstall": "node_modules/.bin/bower install",
-    "server": "ember server",
+    "start": "ember server --output-path=docs",
     "build": "ember build"
   },
   "devDependencies": {

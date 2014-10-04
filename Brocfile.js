@@ -44,8 +44,6 @@ if (env == 'production') {
 
 // Documentation
 if (env !== 'production') {
-  var publicFiles = 'doc/public';
-
   var bowerDependenciesJs = concat('bower_components', {
     inputFiles: [
       'jquery/jquery.js',
@@ -64,20 +62,26 @@ if (env !== 'production') {
     outputFile: '/dependencies.css'
   });
 
-  var doc = 'doc';
-  var docCss = compileSass([doc].concat('bower_components'), 'styles/doc.scss', 'doc.css');
+  var doc = 'app';
+  var docCss = compileSass([doc].concat('bower_components'), 'styles/app.sass', 'app.css');
 
   var docJs = compileCoffee(doc);
-  docJs = filterTemplate(docJs, { stripPathFromName: 'scripts/templates/' });
+  docJs = filterTemplate(docJs, { stripPathFromName: 'templates/' });
 
   docJs = concat(docJs, {
     inputFiles: ['**/*.js'],
-    outputFile: '/doc.js'
+    outputFile: '/app.js'
   });
 
   var docFonts = pickFiles('bower_components', {
     srcDir: 'font-awesome/fonts',
     destDir: 'fonts'
+  });
+
+  var publicFiles = pickFiles('app', {
+    srcDir: './',
+    files: ['**/*.html', '**/*.png'],
+    destDir: '/'
   });
 
   packages = mergeTrees([packages, docJs, docCss, docFonts, bowerDependenciesJs, bowerDependenciesCss, publicFiles]);
