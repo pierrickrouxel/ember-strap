@@ -28,8 +28,8 @@ packages = concat(packages, {
 // Build dist
 if (env == 'production') {
   minPackages = moveFile(packages, {
-      srcFile: 'ember-strap.js',
-      destFile: 'ember-strap.min.js'
+    srcFile: 'ember-strap.js',
+    destFile: 'ember-strap.min.js'
   });
 
   minPackages = uglifyJavaScript(minPackages, {
@@ -44,43 +44,43 @@ if (env == 'production') {
 
 // Documentation
 if (env !== 'production') {
-    var publicFiles = 'doc/public';
+  var publicFiles = 'doc/public';
 
-    var bowerDependenciesJs = concat('bower_components', {
-        inputFiles: [
-            'jquery/jquery.js',
-            'handlebars/handlebars.runtime.js',
-            'ember/ember.js',
-			      'bootstrap-sass-official/assets/javascripts/bootstrap.js',
-            'highlightjs/highlight.pack.js'
-        ],
-        outputFile: '/dependencies.js'
-    });
+  var bowerDependenciesJs = concat('bower_components', {
+    inputFiles: [
+      'jquery/jquery.js',
+      'handlebars/handlebars.runtime.js',
+      'ember/ember.js',
+      'bootstrap-sass-official/assets/javascripts/bootstrap.js',
+      'highlightjs/highlight.pack.js'
+    ],
+    outputFile: '/dependencies.js'
+  });
 
-    var bowerDependenciesCss = concat('bower_components', {
-        inputFiles: [
-            'highlightjs/styles/github.css'
-        ],
-        outputFile: '/dependencies.css'
-    });
+  var bowerDependenciesCss = concat('bower_components', {
+    inputFiles: [
+      'highlightjs/styles/github.css'
+    ],
+    outputFile: '/dependencies.css'
+  });
 
-    var doc = 'doc';
-    var docCss = compileSass([doc].concat('bower_components'), 'styles/doc.scss', 'doc.css');
+  var doc = 'doc';
+  var docCss = compileSass([doc].concat('bower_components'), 'styles/doc.scss', 'doc.css');
 
-    var docJs = compileCoffee(doc);
-    docJs = filterTemplate(docJs, { stripPathFromName: 'scripts/templates/' });
+  var docJs = compileCoffee(doc);
+  docJs = filterTemplate(docJs, { stripPathFromName: 'scripts/templates/' });
 
-    docJs = concat(docJs, {
-        inputFiles: ['**/*.js'],
-        outputFile: '/doc.js'
-    });
+  docJs = concat(docJs, {
+    inputFiles: ['**/*.js'],
+    outputFile: '/doc.js'
+  });
 
-    var docFonts = pickFiles('bower_components', {
-        srcDir: 'font-awesome/fonts',
-        destDir: 'fonts'
-    });
+  var docFonts = pickFiles('bower_components', {
+    srcDir: 'font-awesome/fonts',
+    destDir: 'fonts'
+  });
 
-    packages = mergeTrees([packages, docJs, docCss, docFonts, bowerDependenciesJs, bowerDependenciesCss, publicFiles]);
+  packages = mergeTrees([packages, docJs, docCss, docFonts, bowerDependenciesJs, bowerDependenciesCss, publicFiles]);
 }
 
 module.exports = packages;
