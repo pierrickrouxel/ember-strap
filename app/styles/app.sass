@@ -11,6 +11,9 @@ $project-color: #e1563f
   font-weight: normal
   font-style: normal
 
+html, body
+  overflow-x: hidden
+
 .navbar-brand
   font-family: "pacificoregular"
 
@@ -30,9 +33,9 @@ $project-color: #e1563f
 
 @media (max-width: 768px)
   .bs-docs-header
-    height: 337px
+    padding-bottom: 0
 
     img
-      bottom: -230px
-      left: 50%
-      margin-left: -160px
+      width: 240px
+      position: static
+      margin: auto
