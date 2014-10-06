@@ -50,5 +50,5 @@ header.navbar.navbar-static-top.bs-docs-nav
             a href="#popover" Popover
           li
             a href="#scrollspy" Scrollspy
-            
+
 outlet modal

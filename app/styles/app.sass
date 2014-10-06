@@ -3,3 +3,27 @@
 $project-color: #e1563f;
 
 @import "bootstrap-docs";
+
+@font-face {
+    font-family: 'pacificoregular';
+    src: url('fonts/pacifico-webfont.eot');
+    src: url('fonts/pacifico-webfont.eot?#iefix') format('embedded-opentype'),
+         url('fonts/pacifico-webfont.woff') format('woff'),
+         url('fonts/pacifico-webfont.ttf') format('truetype'),
+         url('fonts/pacifico-webfont.svg#pacificoregular') format('svg');
+    font-weight: normal;
+    font-style: normal;
+
+}
+
+.navbar-brand, .page-header {
+  font-family: "pacificoregular";
+}
+
+.navbar-brand {
+  font-size: 2em;
+}
+
+.page-header {
+  text-shadow: 0.02em 0.02em 0.02em darken($project-color, 30%);
+}

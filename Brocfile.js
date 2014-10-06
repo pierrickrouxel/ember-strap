@@ -59,7 +59,7 @@ if (env !== 'production') {
     ],
     destDir: '/'
   });
-  
+
   var docCss = compileSass([doc].concat('bower_components'), 'styles/app.sass', 'app.css');
 
   var docJs = compileCoffee(doc);
@@ -72,7 +72,7 @@ if (env !== 'production') {
 
   var publicFiles = pickFiles('app', {
     srcDir: './',
-    files: ['**/*.html', '**/*.png'],
+    files: ['**/*.html', '**/*.png', 'fonts/*'],
     destDir: '/'
   });
 
