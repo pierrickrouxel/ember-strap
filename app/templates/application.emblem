@@ -26,9 +26,11 @@ header.navbar.navbar-static-top.bs-docs-nav
 
 .bs-docs-header
   .container
-    h1.page-header EmberStrap
+    h1 EmberStrap
     p
       | Ember wrapper for Twitter Bootstrap 3
+
+    img src='images/ember-strap.png'
 
 .container.bs-docs-container
   .row
