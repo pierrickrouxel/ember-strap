@@ -44,25 +44,22 @@ if (env == 'production') {
 
 // Documentation
 if (env !== 'production') {
-  var bowerDependenciesJs = concat('bower_components', {
-    inputFiles: [
-      'jquery/jquery.js',
-      'handlebars/handlebars.runtime.js',
-      'ember/ember.js',
-      'bootstrap-sass-official/assets/javascripts/bootstrap.js',
-      'highlightjs/highlight.pack.js'
-    ],
-    outputFile: '/dependencies.js'
-  });
-
-  var bowerDependenciesCss = concat('bower_components', {
-    inputFiles: [
-      'highlightjs/styles/github.css'
-    ],
-    outputFile: '/dependencies.css'
-  });
-
   var doc = 'app';
+
+  var bowerDependencies = pickFiles('bower_components', {
+    srcDir: './',
+    files: [
+      'jquery/jquery.js',
+      'handlebars/handlebars.runtime.min.js',
+      'ember/ember.min.js',
+      'bootstrap-sass-official/assets/javascripts/bootstrap.js',
+      'highlightjs/highlight.pack.js',
+      'font-awesome/css/font-awesome.min.css',
+      'font-awesome/fonts/*'
+    ],
+    destDir: '/'
+  });
+  
   var docCss = compileSass([doc].concat('bower_components'), 'styles/app.sass', 'app.css');
 
   var docJs = compileCoffee(doc);
@@ -73,18 +70,13 @@ if (env !== 'production') {
     outputFile: '/app.js'
   });
 
-  var docFonts = pickFiles('bower_components', {
-    srcDir: 'font-awesome/fonts',
-    destDir: 'fonts'
-  });
-
   var publicFiles = pickFiles('app', {
     srcDir: './',
     files: ['**/*.html', '**/*.png'],
     destDir: '/'
   });
 
-  packages = mergeTrees([packages, docJs, docCss, docFonts, bowerDependenciesJs, bowerDependenciesCss, publicFiles]);
+  packages = mergeTrees([packages, docJs, docCss, bowerDependencies, publicFiles]);
 }
 
 module.exports = packages;
