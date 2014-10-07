@@ -1,6 +1,6 @@
 # EmberStrap
 
-Ember wrapper for [Twitter Bootstrap 3](http://getbootstrap.com/).
+Ember wrapper for Twitter Bootstrap 3. [http://pierrickrouxel.github.io/ember-strap/](http://pierrickrouxel.github.io/ember-strap/)
 
 # Building Ember.js
 
