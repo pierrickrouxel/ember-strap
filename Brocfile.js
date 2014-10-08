@@ -1,82 +1,76 @@
+/* global require, module */
 var compileCoffee = require('broccoli-coffee');
-var compileSass = require('broccoli-sass');
-var filterTemplate = require('broccoli-ember-emblem');
 var uglifyJavaScript = require('broccoli-uglify-js');
 var mergeTrees = require('broccoli-merge-trees');
-var pickFiles = require('broccoli-static-compiler');
 var concat = require('broccoli-concat');
-var select = require('broccoli-select');
+var pickFiles = require('broccoli-static-compiler');
 var moveFile = require('broccoli-file-mover');
-var removeFile = require('broccoli-file-remover');
-
 var inlineTemplatePrecompiler = require('./lib/broccoli-ember-inline-template-precompiler');
 var banner = require('./lib/broccoli-banner')
-
 var env = process.argv[2] == 'build' ? 'production' : 'development';
-
-// Library
 var packages = compileCoffee('packages');
-
 packages = inlineTemplatePrecompiler(packages);
-
 packages = concat(packages, {
   inputFiles: ['ember-strap.js', '**/*.js'],
   wrapInEval: env !== 'production',
-  outputFile: '/ember-strap.js'
+  outputFile: '/assets/ember-strap.js'
 });
-
 // Build dist
 if (env == 'production') {
+  packages = moveFile(packages, {
+    srcFile: 'assets/ember-strap.js',
+    destFile: 'ember-strap.js'
+  });
   minPackages = moveFile(packages, {
     srcFile: 'ember-strap.js',
     destFile: 'ember-strap.min.js'
   });
-
   minPackages = uglifyJavaScript(minPackages, {
       // mangle: false,
       // compress: false
   });
-
   packages = mergeTrees([packages, minPackages]);
-
   packages = banner(packages);
 }
 
-// Documentation
-if (env !== 'production') {
-  var doc = 'app';
+var EmberApp = require('ember-cli/lib/broccoli/ember-app');
 
-  var bowerDependencies = pickFiles('bower_components', {
-    srcDir: './',
-    files: [
-      'jquery/jquery.js',
-      'handlebars/handlebars.runtime.min.js',
-      'ember/ember.min.js',
-      'bootstrap-sass-official/assets/javascripts/bootstrap.js',
-      'highlightjs/highlight.pack.js',
-      'font-awesome/css/font-awesome.min.css',
-      'font-awesome/fonts/*'
-    ],
-    destDir: '/'
-  });
+var app = new EmberApp({name: 'doc'});
 
-  var docCss = compileSass([doc].concat('bower_components'), 'styles/app.sass', 'app.css');
+// Use `app.import` to add additional libraries to the generated
+// output files.
+//
+// If you need to use different assets in different
+// environments, specify an object as the first parameter. That
+// object's keys should be the environment name and the values
+// should be the asset to use in that environment.
+//
+// If the library that you are including contains AMD or ES6
+// modules that you would like to import into your application
+// please specify an object with the list of modules as keys
+// along with the exports of each module as its value.
 
-  var docJs = compileCoffee(doc);
-  docJs = filterTemplate(docJs, { stripPathFromName: 'templates/' });
+app.import('bower_components/highlightjs/styles/github.css')
+app.import('bower_components/highlightjs/highlight.pack.js');
 
-  docJs = concat(docJs, {
-    inputFiles: ['**/*.js'],
-    outputFile: '/app.js'
-  });
+app.import('bower_components/bootstrap-sass-official/assets/javascripts/bootstrap.js');
 
-  var publicFiles = pickFiles('app', {
-    srcDir: './',
-    files: ['**/*.html', '**/*.png', 'fonts/*'],
-    destDir: '/'
-  });
+app.import('bower_components/font-awesome/css/font-awesome.css')
+var fontAwesome = pickFiles('bower_components/font-awesome', {
+  srcDir: '/fonts',
+  files: ['*'],
+  destDir: '/fonts'
+});
 
-  packages = mergeTrees([packages, docJs, docCss, bowerDependencies, publicFiles]);
+var pacifico = pickFiles('vendor/pacifico', {
+  srcDir: '/',
+  files: ['*'],
+  destDir: '/fonts'
+});
+
+var tree = app.toTree([fontAwesome, pacifico, packages]);
+if (env == 'production') {
+  tree = packages;
 }
 
-module.exports = packages;
+module.exports = tree;

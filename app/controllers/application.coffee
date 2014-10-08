@@ -1,4 +1,6 @@
-App.ApplicationController = Ember.Controller.extend
+`import Ember from 'ember'`
+
+Application = Ember.Controller.extend
   init: ->
     $.getJSON 'https://api.github.com/repos/pierrickrouxel/ember-strap/tags', (json) =>
       lastVersion = Ember.A(json).get('firstObject')
@@ -33,3 +35,5 @@ App.ApplicationController = Ember.Controller.extend
              '  </div>\n' +
              '  ...\n' +
              '</body>'
+
+`export default Application`

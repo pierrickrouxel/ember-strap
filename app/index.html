@@ -1,25 +1,27 @@
 <!DOCTYPE html>
 <html>
-<head>
-    <title>EmberStrap</title>
-
-    <script src="jquery/jquery.js"></script>
-    <script src="handlebars/handlebars.runtime.min.js"></script>
-    <script src="ember/ember.min.js"></script>
-    <script src="bootstrap-sass-official/assets/javascripts/bootstrap.js"></script>
-    <script src="highlightjs/highlight.pack.js"></script>
-
-    <script src="ember-strap.js"></script>
-    <script src="app.js"></script>
-
-    <link href="font-awesome/css/font-awesome.min.css" media="screen" rel="stylesheet" type="text/css">
-    <link href="app.css" media="screen" rel="stylesheet" type="text/css">
-
-    <link rel="shortcut icon" href="favicon.png">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+  <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-</head>
-<body data-spy="scroll" data-target=".bs-docs-sidebar">
-</body>
+    <title>EmberStrap</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    {{BASE_TAG}}
+
+    <link rel="stylesheet" href="assets/vendor.css">
+    <link rel="stylesheet" href="assets/doc.css">
+  </head>
+  <body data-spy="scroll" data-target=".bs-docs-sidebar">
+    <script>
+      window.EmberENV = {{EMBER_ENV}};
+    </script>
+    <script src="assets/vendor.js"></script>
+    <script src="assets/ember-strap.js"></script>
+    <script src="assets/doc.js"></script>
+    <script>
+      hljs.initHighlightingOnLoad();
+      window.Doc = require('doc/app')['default'].create({{APP_CONFIG}});
+    </script>
+  </body>
 </html>

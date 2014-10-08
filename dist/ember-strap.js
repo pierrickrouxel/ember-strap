@@ -1,7 +1,7 @@
 /**
  * ember-strap
- * @version v0.0.1 - 2014-10-03
- * @link https://github.com/pierrickrouxel/ember-strap
+ * @version v0.0.0 - 2014-10-08
+ * @link http://pierrickrouxel.github.io/ember-strap
  * @author Pierrick Rouxel (pierrick.rouxel@me.com)
  * @license MIT License, http://www.opensource.org/licenses/MIT
  */
@@ -15,11 +15,11 @@
 
   hackScrollSpy = function() {
     return $(document).on('click', function(e) {
-      return $('*[data-spy="scroll"]').each(function() {
+      return $('[data-spy="scroll"]').each(function() {
         var $anchor, $target, spyTarget;
         spyTarget = $(this).data('target');
         $target = $(e.target);
-        if ($target.parent(spyTarget)) {
+        if ($target.closest(spyTarget).length) {
           e.preventDefault();
           $anchor = $($target.attr('href'));
           if ($anchor.length) {
