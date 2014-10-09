@@ -1,6 +1,9 @@
 registeredModal = null
 
 EmberStrap.ModalView = Ember.View.extend
+  actions:
+    hideModal: @hideModal
+
   layout: precompileTemplate(
     '<div {{bind-attr class=":modal-dialog view.sizeClass"}}>
       <div class="modal-content">
