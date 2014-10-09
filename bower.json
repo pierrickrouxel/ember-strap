@@ -1,6 +1,6 @@
 {
   "name": "ember-strap",
-  "dependencies": {
+  "devDependencies": {
     "handlebars": "~1.3.0",
     "jquery": "^1.11.1",
     "ember": "1.7.0",
@@ -14,6 +14,6 @@
     "qunit": "~1.15.0",
     "font-awesome": "~4.2.0",
     "highlightjs": "~8.0.0",
-    "bootstrap-sass-official": "~3.2.0+2"
+    "bootstrap-sass-official": "3.2.0+2"
   }
 }
