@@ -4,11 +4,11 @@
   div.bs-callout.bs-callout-info
     h4 Design
     p
-      | The modal implementation is inspired by the 
+      | The modal implementation is inspired by the
         <a href="http://emberjs.com/guides/cookbook/user_interface_and_interaction/using_modal_dialogs/">
         Ember Cookbook
         </a>.
-        
+
   h3 Example
   .bs-example
     button.btn.btn-primary click="openExampleModal" Open modal
@@ -22,7 +22,7 @@
   h4
     ' .renderModal
     small (name, options)
-  p 
+  p
     | Reveals the modal.<br>
 
   h4
@@ -48,6 +48,20 @@
         td animation
         td boolean
         td true
-        td Apply a CSS fade transition to the modal.
+        td Applies a CSS fade transition to the modal.
+      tr
+        td size
+        td string
+        td null
+        td Defines the modal size. You can use <code>large</code> or <code>small</code>.
 
   p You can also use all bootstrap modal options. See <a href="http://getbootstrap.com/javascript/#modals">bootstrap documentation</a>.
+
+  h3 Actions
+  h4 hideModal
+  p
+    | This action is available inside the modal view. It allows to close the modal from the content of it.<br>
+    | You can write the following code in the template to create a close button.
+  .highlight
+    pre
+      code.html= hideModal

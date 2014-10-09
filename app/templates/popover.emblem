@@ -13,7 +13,7 @@
 
   h3 Actions
   h4 hidePopover
-  p 
+  p
     | This action is available inside the popover view. It allows to close the popover from the content of it.<br>
     | You can write the following code in the template to create a close button.
   .highlight

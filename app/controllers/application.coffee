@@ -20,6 +20,8 @@ Application = Ember.Controller.extend
          '  }\n' +
          '});'
 
+  hideModal: '<button {{action hideModal on="click" target="view"}}>Close</button>'
+
   popover: '<button {{es-popover}}>Show popover</button>'
 
   hidePopover: '<button {{action hidePopover on="click" target="view"}}>Close</button>'
