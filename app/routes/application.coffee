@@ -2,7 +2,7 @@
 
 Application = Ember.Route.extend
   actions:
-    openExampleModal: ->
-      @renderModal('modal-example', into: 'application', outlet: 'modal')
+    scrollTop: ->
+      window.scrollTo(0, 0)
 
 `export default Application`

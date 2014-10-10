@@ -53,4 +53,6 @@ header.navbar.navbar-static-top.bs-docs-nav
           li
             a href="#scrollspy" Scrollspy
 
+        a.back-to-top href="#" click="scrollTop" Back to top
+
 outlet modal
