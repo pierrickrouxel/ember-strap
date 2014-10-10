@@ -1,6 +1,6 @@
 /**
  * ember-strap
- * @version v0.0.0 - 2014-10-08
+ * @version v0.0.0 - 2014-10-10
  * @link http://pierrickrouxel.github.io/ember-strap
  * @author Pierrick Rouxel (pierrick.rouxel@me.com)
  * @license MIT License, http://www.opensource.org/licenses/MIT
@@ -49,6 +49,11 @@
   registeredModal = null;
 
   EmberStrap.ModalView = Ember.View.extend({
+    actions: {
+      hideModal: function() {
+        return this.hideModal();
+      }
+    },
     layout: Ember.Handlebars.template(function anonymous(Handlebars,depth0,helpers,partials,data) {
 this.compilerInfo = [4,'>= 1.0.0'];
 helpers = this.merge(helpers, Ember.Handlebars.helpers); data = data || {};
@@ -94,6 +99,7 @@ helpers = this.merge(helpers, Ember.Handlebars.helpers); data = data || {};
         registeredModal = this.container.lookup('view:es-modal');
       } else {
         registeredModal.set('templateName', name);
+        registeredModal.rerender();
       }
       registeredModal.setProperties(options);
       return Ember.run.scheduleOnce('afterRender', this, function() {
