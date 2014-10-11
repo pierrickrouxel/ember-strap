@@ -9,7 +9,8 @@
   },
   "scripts": {
     "start": "ember server --output-path=doc",
-    "build": "ember build",
+    "build": "ember build --environment=production",
+    "build-doc": "ember build --environment=doc --output-path=doc",
     "test": "ember test"
   },
   "repository": "https://github.com/pierrickrouxel/ember-strap",
@@ -31,6 +32,7 @@
     "broccoli-ember-hbs-template-compiler": "^1.6.1",
     "broccoli-emblem-compiler": "^0.3.18",
     "broccoli-file-mover": "^0.4.1",
+    "broccoli-filter": "^0.1.7",
     "broccoli-merge-trees": "^0.2.0",
     "broccoli-sass": "^0.2.2",
     "broccoli-static-compiler": "^0.2.1",
@@ -40,7 +42,9 @@
     "ember-cli-ic-ajax": "0.1.1",
     "ember-cli-inject-live-reload": "^1.0.2",
     "ember-cli-qunit": "0.1.0",
+    "ember-template-compiler": "^1.6.1",
     "express": "^4.8.5",
-    "glob": "^4.0.5"
+    "glob": "^4.0.5",
+    "handlebars": "^1.3.0"
   }
 }
