@@ -42,6 +42,7 @@ Ember.Route.reopen
       registeredModal = @container.lookup('view:es-modal')
     else
       registeredModal.set('templateName', name)
+      registeredModal.set('context', options.context || options.controller)
       registeredModal.rerender()
 
     registeredModal.setProperties(options)

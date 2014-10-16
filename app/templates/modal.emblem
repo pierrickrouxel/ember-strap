@@ -4,7 +4,7 @@
   div.bs-callout.bs-callout-info
     h4 Design
     p
-      | The modal implementation is inspired by the
+      | The modal implementation is inspired by the&nbsp;
         <a href="http://emberjs.com/guides/cookbook/user_interface_and_interaction/using_modal_dialogs/">
         Ember Cookbook
         </a>.

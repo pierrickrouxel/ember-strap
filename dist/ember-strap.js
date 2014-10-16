@@ -1,6 +1,6 @@
 /**
  * ember-strap
- * @version v0.0.0 - 2014-10-10
+ * @version v0.0.0 - 2014-10-16
  * @link http://pierrickrouxel.github.io/ember-strap
  * @author Pierrick Rouxel (pierrick.rouxel@me.com)
  * @license MIT License, http://www.opensource.org/licenses/MIT
@@ -99,6 +99,7 @@ helpers = this.merge(helpers, Ember.Handlebars.helpers); data = data || {};
         registeredModal = this.container.lookup('view:es-modal');
       } else {
         registeredModal.set('templateName', name);
+        registeredModal.set('context', options.context || options.controller);
         registeredModal.rerender();
       }
       registeredModal.setProperties(options);
