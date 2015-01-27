@@ -5,7 +5,7 @@ var mergeTrees = require('broccoli-merge-trees');
 var concat = require('broccoli-concat');
 var pickFiles = require('broccoli-static-compiler');
 var Funnel = require('broccoli-funnel');
-var inlineTemplatePrecompiler = require('./lib/broccoli-ember-inline-template-precompiler');
+var inlineTemplatePrecompiler = require('broccoli-ember-inline-template-compiler');
 var banner = require('./lib/broccoli-banner')
 
 var env = process.env.EMBER_ENV || 'development';
