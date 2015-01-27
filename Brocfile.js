@@ -4,7 +4,7 @@ var uglifyJavaScript = require('broccoli-uglify-js');
 var mergeTrees = require('broccoli-merge-trees');
 var concat = require('broccoli-concat');
 var pickFiles = require('broccoli-static-compiler');
-var moveFile = require('broccoli-file-mover');
+var Funnel = require('broccoli-funnel');
 var inlineTemplatePrecompiler = require('./lib/broccoli-ember-inline-template-precompiler');
 var banner = require('./lib/broccoli-banner')
 
@@ -19,9 +19,14 @@ tree = concat(tree, {
 });
 // Build dist
 if (env == 'production') {
-  minPackages = moveFile(tree, {
-    srcFile: 'ember-strap.js',
-    destFile: 'ember-strap.min.js'
+  var minPackages = new Funnel(tree, {
+    getDestinationPath: function(relativePath) {
+      if (relativePath === 'ember-strap.js') {
+        return 'ember-strap.min.js';
+      }
+
+      return relativePath;
+    }
   });
   minPackages = uglifyJavaScript(minPackages, {
       // mangle: false,
