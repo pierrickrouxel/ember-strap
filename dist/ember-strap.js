@@ -1,6 +1,6 @@
 /**
  * ember-strap
- * @version v0.0.0 - 2015-01-27
+ * @version v0.0.0 - 2015-01-28
  * @link http://pierrickrouxel.github.io/ember-strap
  * @author Pierrick Rouxel (pierrick.rouxel@me.com)
  * @license MIT License, http://www.opensource.org/licenses/MIT
@@ -120,6 +120,7 @@ helpers = this.merge(helpers, Ember.Handlebars.helpers); data = data || {};
   uuid = 0;
 
   EmberStrap.PopoverView = Ember.View.extend({
+    isVisible: false,
     actions: {
       hidePopover: function() {
         return $('[data-ember-strap-popover=' + this.get('popoverId') + ']').popover('hide');
@@ -135,10 +136,13 @@ helpers = this.merge(helpers, Ember.Handlebars.helpers); data = data || {};
     }, options.hash);
     delete viewHash.container;
     view = options.parentView.createChildView('es-popover', viewHash);
+    view.set('isVisible', true);
+    view.append();
     Ember.run.scheduleOnce('afterRender', this, function() {
       var $popover;
+      view.$().remove();
       options.hash.html = true;
-      options.hash.content = view.createElement().get('element');
+      options.hash.content = view.$();
       $popover = $('[data-ember-strap-popover=' + popoverId + ']').popover(options.hash);
       $popover.on('shown.bs.popover', function() {
         return view.get('childViews').forEach(function(childView) {
