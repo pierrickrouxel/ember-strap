@@ -109,16 +109,11 @@ helpers = this.merge(helpers, Ember.Handlebars.helpers); data = data || {};
   uuid = 0;
 
   EmberStrap.PopoverView = Ember.View.extend({
-    isVisiblePopover: true,
-    _isVisiblePopoverDidChange: (function() {
-      var $popover;
-      $popover = $('[data-ember-strap-popover=' + this.get('popoverId') + ']');
-      if (this.get('isVisiblePopover')) {
-        return $popover.popover('show');
-      } else {
-        return $popover.popover('hide');
+    actions: {
+      hidePopover: function() {
+        return $('[data-ember-strap-popover=' + popoverId + ']').popover('hide');
       }
-    }).observes('isVisiblePopover')
+    }
   });
 
   registerPopover = function(options) {
@@ -137,22 +132,18 @@ helpers = this.merge(helpers, Ember.Handlebars.helpers); data = data || {};
       options.hash.html = true;
       options.hash.content = view.$();
       $popover.popover(options.hash);
-      $popover.on('shown.bs.popover', function() {
-        view.get('childViews').forEach(function(childView) {
+      return $popover.on('shown.bs.popover', function() {
+        return view.get('childViews').forEach(function(childView) {
           return childView.rerender();
         });
-        return view.set('isVisiblePopover', true);
-      });
-      return $popover.on('hidden.bs.popover', function() {
-        return view.set('isVisiblePopover', false);
       });
     });
     options.parentView.on('willClearRender', function() {
-      $('[data-ember-strap-popover=' + popoverId + ']').off('bs.popover');
+      var $popover;
+      $popover = $('[data-ember-strap-popover=' + popoverId + ']');
+      $popover.off('shown.bs.popover');
+      $popover.popover('destroy');
       return view.destroy();
-    });
-    view.on('willClearRender', function() {
-      return $('[data-ember-strap-popover=' + popoverId + ']').popover('destroy');
     });
     return popoverId;
   };

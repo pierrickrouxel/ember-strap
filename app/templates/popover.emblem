@@ -11,21 +11,14 @@
     pre
       code.html= popover
 
+  h3 Actions
+  h4 hidePopover
+  p
+    | This action is available inside the popover view. It allows to close the popover from the content of it.<br>
+    | You can write the following code in the template to create a close button.
+  .highlight
+    pre
+      code.html= hidePopover
+
   h3 Options
-
-  table.table.table-bordered.table-striped
-    thead
-      tr
-        th Name
-        th Type
-        th Default
-        th Description
-
-    tbody
-      tr
-        td isVisiblePopover
-        td boolean
-        td true
-        td Show or hide the popover.
-
-  p The other popover options are the same as original bootstrap popover. See <a href="http://getbootstrap.com/javascript/#popovers">bootstrap documentation</a>.
+  p The popover options are the same as original bootstrap popover. See <a href="http://getbootstrap.com/javascript/#popovers">bootstrap documentation</a>.
