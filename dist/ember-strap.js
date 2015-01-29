@@ -138,6 +138,9 @@ helpers = this.merge(helpers, Ember.Handlebars.helpers); data = data || {};
       options.hash.content = view.$();
       $popover.popover(options.hash);
       $popover.on('shown.bs.popover', function() {
+        view.get('childViews').forEach(function(childView) {
+          return childView.rerender();
+        });
         return view.set('isVisiblePopover', true);
       });
       return $popover.on('hidden.bs.popover', function() {

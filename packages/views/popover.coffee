@@ -33,6 +33,9 @@ registerPopover = (options) ->
     $popover.popover(options.hash)
 
     $popover.on 'shown.bs.popover', ->
+      # Rebinds the events of subviews. The listeners are broken when the popover takes property of element.
+      view.get('childViews').forEach (childView) ->
+        childView.rerender()
       view.set('isVisiblePopover', true)
     $popover.on 'hidden.bs.popover', ->
       view.set('isVisiblePopover', false)
