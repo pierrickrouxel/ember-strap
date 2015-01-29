@@ -56,12 +56,3 @@
         td Defines the modal size. You can use <code>large</code> or <code>small</code>.
 
   p You can also use all bootstrap modal options. See <a href="http://getbootstrap.com/javascript/#modals">bootstrap documentation</a>.
-
-  h3 Actions
-  h4 hideModal
-  p
-    | This action is available inside the modal view. It allows to close the modal from the content of it.<br>
-    | You can write the following code in the template to create a close button.
-  .highlight
-    pre
-      code.html= hideModal

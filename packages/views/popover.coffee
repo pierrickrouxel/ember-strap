@@ -1,11 +1,16 @@
 uuid = 0
 
 EmberStrap.PopoverView = Ember.View.extend
-  isVisible: false
 
-  actions:
-    hidePopover: ->
-      $('[data-ember-strap-popover=' + @get('popoverId') + ']').popover('hide')
+  isVisiblePopover: true
+
+  _isVisiblePopoverDidChange: (->
+    $popover = $('[data-ember-strap-popover=' + @get('popoverId') + ']')
+    if @get('isVisiblePopover')
+      $popover.popover('show')
+    else
+      $popover.popover('hide')
+  ).observes('isVisiblePopover')
 
 registerPopover = (options) ->
   popoverId = ++uuid
@@ -15,23 +20,25 @@ registerPopover = (options) ->
   delete viewHash.container
 
   view = options.parentView.createChildView('es-popover', viewHash)
-  view.set('isVisible', true)
   view.append()
 
   Ember.run.scheduleOnce 'afterRender', this, ->
+    $popover = $('[data-ember-strap-popover=' + popoverId + ']')
+
     view.$().remove()
 
     options.hash.html = true
     options.hash.content = view.$()
 
-    $popover = $('[data-ember-strap-popover=' + popoverId + ']').popover(options.hash)
-    # Rebinds the events of subviews. The listeners are broken when the popover takes property of element.
+    $popover.popover(options.hash)
+
     $popover.on 'shown.bs.popover', ->
-      view.get('childViews').forEach (childView) ->
-        childView.rerender()
-    $popover
+      view.set('isVisiblePopover', true)
+    $popover.on 'hidden.bs.popover', ->
+      view.set('isVisiblePopover', false)
 
   options.parentView.on 'willClearRender', ->
+    $('[data-ember-strap-popover=' + popoverId + ']').off('bs.popover')
     view.destroy()
 
   view.on 'willClearRender', ->

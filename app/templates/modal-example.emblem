@@ -5,5 +5,5 @@
 .modal-body Some content
 
 .modal-footer
-    button.btn.btn-default type="button" click="hideModal target='view'" Close
+    button.btn.btn-default type="button" click="closeExampleModal" Close
     button.btn.btn-primary type="button" Save

@@ -1,9 +1,6 @@
 registeredModal = null
 
 EmberStrap.ModalView = Ember.View.extend
-  actions:
-    hideModal: ->
-      @hideModal()
 
   layout: precompileTemplate(
     '<div {{bind-attr class=":modal-dialog view.sizeClass"}}>
@@ -26,12 +23,6 @@ EmberStrap.ModalView = Ember.View.extend
       'modal-lg'
   ).property('size')
 
-  showModal: ->
-    @$().modal('show')
-
-  hideModal: ->
-    @$().modal('hide')
-
 Ember.Route.reopen
   renderModal: (name, options) ->
     options ||= {}
@@ -47,7 +38,7 @@ Ember.Route.reopen
 
     registeredModal.setProperties(options)
     Ember.run.scheduleOnce 'afterRender', this, ->
-      registeredModal.showModal()
+      registeredModal.$().modal('show')
 
   destroyModal: ->
-    registeredModal.hideModal()
+    registeredModal.$().modal('hide')

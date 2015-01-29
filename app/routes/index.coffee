@@ -5,4 +5,7 @@ Index = Ember.Route.extend
     openExampleModal: ->
       @renderModal('modal-example', into: 'index', outlet: 'modal')
 
+    closeExampleModal: ->
+      @destroyModal()
+
 `export default Index`
