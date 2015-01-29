@@ -111,7 +111,7 @@ helpers = this.merge(helpers, Ember.Handlebars.helpers); data = data || {};
   EmberStrap.PopoverView = Ember.View.extend({
     actions: {
       hidePopover: function() {
-        return $('[data-ember-strap-popover=' + popoverId + ']').popover('hide');
+        return $('[data-ember-strap-popover=' + this.get('popoverId') + ']').popover('hide');
       }
     }
   });

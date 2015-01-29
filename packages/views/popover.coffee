@@ -3,7 +3,7 @@ uuid = 0
 EmberStrap.PopoverView = Ember.View.extend
   actions:
     hidePopover: ->
-      $('[data-ember-strap-popover=' + popoverId + ']').popover('hide')
+      $('[data-ember-strap-popover=' + @get('popoverId') + ']').popover('hide')
 
 registerPopover = (options) ->
   popoverId = ++uuid
