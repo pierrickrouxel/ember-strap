@@ -22,6 +22,7 @@ registerPopover = (options) ->
 
     options.hash.html = true
     options.hash.content = view.$()
+    options.hash.container ||= 'body'
 
     $popover.popover(options.hash)
 
