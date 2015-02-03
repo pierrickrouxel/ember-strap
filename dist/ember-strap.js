@@ -1,6 +1,6 @@
 /**
  * ember-strap
- * @version v0.0.0 - 2015-01-30
+ * @version v0.0.0 - 2015-02-03
  * @link http://pierrickrouxel.github.io/ember-strap
  * @author Pierrick Rouxel (pierrick.rouxel@me.com)
  * @license MIT License, http://www.opensource.org/licenses/MIT
@@ -104,17 +104,21 @@ helpers = this.merge(helpers, Ember.Handlebars.helpers); data = data || {};
 }).call(this);
 
 (function() {
-  var registerPopover, uuid;
+  var getToggleElement, registerPopover, uuid;
 
   uuid = 0;
 
   EmberStrap.PopoverView = Ember.View.extend({
     actions: {
       hidePopover: function() {
-        return $('[data-ember-strap-popover=' + this.get('popoverId') + ']').popover('hide');
+        return getToggleElement(this.get('popoverId')).popover('hide');
       }
     }
   });
+
+  getToggleElement = function(popoverId) {
+    return $('[data-ember-strap-popover=' + popoverId + ']');
+  };
 
   registerPopover = function(options) {
     var popoverId, view, viewHash;
@@ -124,27 +128,23 @@ helpers = this.merge(helpers, Ember.Handlebars.helpers); data = data || {};
     }, options.hash);
     delete viewHash.container;
     view = options.parentView.createChildView('es-popover', viewHash);
-    view.append();
     Ember.run.scheduleOnce('afterRender', this, function() {
-      var $popover, _base;
-      $popover = $('[data-ember-strap-popover=' + popoverId + ']');
-      view.$().remove();
+      var $popover, $preparedElement, _base;
+      $popover = getToggleElement(popoverId);
+      $preparedElement = view.createElement().$();
       options.hash.html = true;
-      options.hash.content = view.$();
+      options.hash.content = $preparedElement;
       (_base = options.hash).container || (_base.container = 'body');
       $popover.popover(options.hash);
-      return $popover.on('shown.bs.popover', function() {
-        return view.get('childViews').forEach(function(childView) {
-          return childView.rerender();
-        });
+      $popover.on('shown.bs.popover', function() {
+        var $parentElement;
+        $parentElement = $preparedElement.parent();
+        view.destroyElement();
+        return view.replaceIn($parentElement);
       });
-    });
-    options.parentView.on('willClearRender', function() {
-      var $popover;
-      $popover = $('[data-ember-strap-popover=' + popoverId + ']');
-      $popover.off('shown.bs.popover');
-      $popover.popover('destroy');
-      return view.destroy();
+      return options.parentView.on('willDestroyElement', function() {
+        return $popover.popover('destroy');
+      });
     });
     return popoverId;
   };

@@ -3,7 +3,10 @@ uuid = 0
 EmberStrap.PopoverView = Ember.View.extend
   actions:
     hidePopover: ->
-      $('[data-ember-strap-popover=' + @get('popoverId') + ']').popover('hide')
+      getToggleElement(@get('popoverId')).popover('hide')
+
+getToggleElement = (popoverId) ->
+  $('[data-ember-strap-popover=' + popoverId + ']')
 
 registerPopover = (options) ->
   popoverId = ++uuid
@@ -13,29 +16,24 @@ registerPopover = (options) ->
   delete viewHash.container
 
   view = options.parentView.createChildView('es-popover', viewHash)
-  view.append()
 
   Ember.run.scheduleOnce 'afterRender', this, ->
-    $popover = $('[data-ember-strap-popover=' + popoverId + ']')
-
-    view.$().remove()
+    $popover = getToggleElement(popoverId)
+    $preparedElement = view.createElement().$()
 
     options.hash.html = true
-    options.hash.content = view.$()
+    options.hash.content = $preparedElement
     options.hash.container ||= 'body'
 
     $popover.popover(options.hash)
 
     $popover.on 'shown.bs.popover', ->
-      # Rebinds the events of subviews. The listeners are broken when the popover takes property of element.
-      view.get('childViews').forEach (childView) ->
-        childView.rerender()
+      $parentElement = $preparedElement.parent()
+      view.destroyElement()
+      view.replaceIn($parentElement)
 
-  options.parentView.on 'willClearRender', ->
-    $popover = $('[data-ember-strap-popover=' + popoverId + ']')
-    $popover.off('shown.bs.popover')
-    $popover.popover('destroy')
-    view.destroy()
+    options.parentView.on 'willDestroyElement', ->
+      $popover.popover('destroy')
 
   popoverId
 
