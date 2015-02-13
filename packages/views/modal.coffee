@@ -23,6 +23,10 @@ EmberStrap.ModalView = Ember.View.extend
       'modal-lg'
   ).property('size')
 
+  registerEvents: (->
+    @$().on('hidden.bs.modal', => @get('controller').send('didHide'))
+  ).on('didInsertElement')
+
 Ember.Route.reopen
   renderModal: (name, options) ->
     options ||= {}

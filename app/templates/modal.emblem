@@ -23,7 +23,7 @@
     ' .renderModal
     small (name, options)
   p
-    | Reveals the modal.<br>
+    | Reveals the modal.
 
   h4
     ' .destroyModal
@@ -33,6 +33,13 @@
   div.bs-callout.bs-callout-warning
     h4 Warning
     p EmberStrap can render only one modal at same time.
+
+  h3 Events
+  h4
+    ' .didHide
+    small ()
+  p
+    | Triggered when the modal is hidden.
 
   h3 Options
   table.table.table-bordered.table-striped

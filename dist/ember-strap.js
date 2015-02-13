@@ -1,6 +1,6 @@
 /**
  * ember-strap
- * @version v0.0.0 - 2015-02-03
+ * @version v0.0.0 - 2015-02-13
  * @link http://pierrickrouxel.github.io/ember-strap
  * @author Pierrick Rouxel (pierrick.rouxel@me.com)
  * @license MIT License, http://www.opensource.org/licenses/MIT
@@ -76,7 +76,14 @@ helpers = this.merge(helpers, Ember.Handlebars.helpers); data = data || {};
       } else if (this.get('size') === 'large') {
         return 'modal-lg';
       }
-    }).property('size')
+    }).property('size'),
+    registerEvents: (function() {
+      return this.$().on('hidden.bs.modal', (function(_this) {
+        return function() {
+          return _this.get('controller').send('didHide');
+        };
+      })(this));
+    }).on('didInsertElement')
   });
 
   Ember.Route.reopen({
