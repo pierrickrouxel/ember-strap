@@ -1,52 +1,44 @@
 {
   "name": "ember-strap",
-  "description": "Ember wrapper for Twitter Bootstrap 3",
-  "version": "0.0.0",
-  "private": true,
+  "version": "0.0.1",
+  "description": "The default blueprint for ember-cli addons.",
   "directories": {
     "doc": "doc",
     "test": "tests"
   },
   "scripts": {
-    "start": "ember server --output-path=doc",
-    "build": "ember build --environment=production",
-    "build-doc": "ember build --environment=doc --output-path=doc",
+    "start": "ember server",
+    "build": "ember build",
     "test": "ember test"
   },
-  "repository": "https://github.com/pierrickrouxel/ember-strap",
+  "repository": "",
   "engines": {
     "node": ">= 0.10.0"
   },
-  "author": {
-    "name": "Pierrick Rouxel",
-    "email": "pierrick.rouxel@me.com"
-  },
-  "homepage": "http://pierrickrouxel.github.io/ember-strap",
-  "bugs": "https://github.com/pierrickrouxel/ember-strap/issues",
+  "author": "Pierrick Rouxel",
   "license": "MIT",
   "devDependencies": {
     "broccoli-asset-rev": "^2.0.0",
-    "broccoli-coffee": "^0.1.2",
-    "broccoli-concat": "0.0.11",
-    "broccoli-ember-inline-template-compiler": "rwjblue/broccoli-ember-inline-template-compiler#62366a7",
-    "broccoli-emblem-compiler": "^0.3.18",
-    "broccoli-filter": "^0.1.7",
-    "broccoli-funnel": "^0.1.7",
-    "broccoli-merge-trees": "^0.2.0",
-    "broccoli-sass": "^0.2.2",
-    "broccoli-static-compiler": "^0.2.1",
-    "broccoli-uglify-js": "^0.1.3",
-    "ember-cli": "0.1.9",
-    "ember-cli-6to5": "0.2.1",
-    "ember-cli-coffeescript": "^0.1.0",
+    "broccoli-ember-hbs-template-compiler": "^1.6.1",
+    "ember-cli": "0.1.15",
+    "ember-cli-6to5": "^3.0.0",
+    "ember-cli-app-version": "0.3.1",
     "ember-cli-content-security-policy": "0.3.0",
     "ember-cli-dependency-checker": "0.0.7",
     "ember-cli-ic-ajax": "0.1.1",
     "ember-cli-inject-live-reload": "^1.3.0",
-    "ember-cli-qunit": "0.1.2",
-    "ember-export-application-global": "^1.0.0",
+    "ember-cli-qunit": "0.3.7",
+    "ember-cli-uglify": "1.0.1",
+    "ember-export-application-global": "^1.0.2",
     "express": "^4.8.5",
-    "glob": "^4.0.5",
-    "handlebars": "^1.3.0"
+    "glob": "^4.0.5"
+  },
+  "keywords": [
+    "ember-addon",
+    "bootstrap",
+    "ember-strap"
+  ],
+  "ember-addon": {
+    "configPath": "tests/dummy/config"
   }
 }

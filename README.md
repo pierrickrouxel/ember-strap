@@ -1,9 +1,25 @@
-# EmberStrap
+# Ember-strap
 
-Ember wrapper for Twitter Bootstrap 3. [http://pierrickrouxel.github.io/ember-strap/](http://pierrickrouxel.github.io/ember-strap/)
+This README outlines the details of collaborating on this Ember addon.
 
-# Building Ember.js
+## Installation
 
-1. Ensure that [Node.js](http://nodejs.org/) is installed.
-2. Run `npm install` to ensure the required dependencies are installed.
-3. Run `npm run build` to build EmberStrap. The builds will be placed in the `dist/` directory.
+* `git clone` this repository
+* `npm install`
+* `bower install`
+
+## Running
+
+* `ember server`
+* Visit your app at http://localhost:4200.
+
+## Running Tests
+
+* `ember test`
+* `ember test --server`
+
+## Building
+
+* `ember build`
+
+For more information on using ember-cli, visit [http://www.ember-cli.com/](http://www.ember-cli.com/).
