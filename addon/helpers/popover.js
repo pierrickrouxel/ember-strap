@@ -6,13 +6,13 @@ var registerPopover = function(options) {
   var popoverId = ++uuid;
 
   // Fix container property override
-  var viewHash = $.extend({ popoverId: popoverId }, options.hash);
+  var viewHash = Ember.$.extend({ popoverId: popoverId }, options.hash);
   delete viewHash.container;
 
   var view = options.parentView.createChildView('es-popover', viewHash);
 
   Ember.run.scheduleOnce('afterRender', this, function() {
-    var $popover = $('[data-ember-strap-popover=' + popoverId + ']');
+    var $popover = Ember.$('[data-ember-strap-popover=' + popoverId + ']');
     var $preparedElement = view.createElement().$();
 
     options.hash.html = true;
@@ -45,4 +45,4 @@ export default function(options) {
 
   var popoverId = registerPopover(popover);
   return new Ember.Handlebars.SafeString('data-ember-strap-popover="' + popoverId + '"');
-};
+}

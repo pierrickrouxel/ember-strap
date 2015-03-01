@@ -1,9 +1,0 @@
-.modal-header
-  button.close type="button" data-dismiss="modal" aria-hidden="true" &times;
-  h4.modal-title Modal title
-
-.modal-body Some content
-
-.modal-footer
-    button.btn.btn-default type="button" click="closeExampleModal" Close
-    button.btn.btn-primary type="button" Save

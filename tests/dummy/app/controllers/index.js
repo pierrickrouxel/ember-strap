@@ -1,10 +1,15 @@
-`import Ember from 'ember'`
+import Ember from 'ember';
 
-Index = Ember.Controller.extend
-  init: ->
-    $.getJSON 'https://api.github.com/repos/pierrickrouxel/ember-strap/tags', (json) =>
-      lastVersion = Ember.A(json).get('firstObject')
-      @set('version', lastVersion.name) if lastVersion
+export default Ember.Controller.extend({
+  init: function() {
+    var _this = this;
+    $.getJSON('https://api.github.com/repos/pierrickrouxel/ember-strap/tags', function(json) {
+      var lastVersion = Ember.A(json).get('firstObject');
+      if (lastVersion) {
+        _this.set('version', lastVersion.name);
+      }
+    });
+  },
 
   modal: 'App.ApplicationRoute = Ember.Route.extend({\n' +
          '  actions: {\n' +
@@ -15,16 +20,16 @@ Index = Ember.Controller.extend
          '      });\n' +
          '    }\n\n' +
          '    closeExampleModal: function() {\n' +
-         "      this.destroyModal();\n" +
+         '      this.destroyModal();\n' +
          '    }\n' +
          '  }\n' +
-         '});'
+         '});',
 
-  hideModal: '<button {{action hideModal on="click" target="view"}}>Close</button>'
+  hideModal: '<button {{action hideModal on="click" target="view"}}>Close</button>',
 
-  popover: '<button {{es-popover}}>Show popover</button>'
+  popover: '<button {{es-popover}}>Show popover</button>',
 
-  hidePopover: '<button {{action hidePopover on="click" target="view"}}>Close</button>'
+  hidePopover: '<button {{action hidePopover on="click" target="view"}}>Close</button>',
 
   scrollspy: '<body data-spy="scroll" data-target=".navbar-example">\n' +
              '  ...\n' +
@@ -37,5 +42,4 @@ Index = Ember.Controller.extend
              '  </div>\n' +
              '  ...\n' +
              '</body>'
-
-`export default Index`
+});

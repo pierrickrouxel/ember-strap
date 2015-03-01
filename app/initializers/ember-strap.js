@@ -5,15 +5,15 @@ import PopoverHelper from 'ember-strap/helpers/popover';
 
 var hackScrollSpy = function() {
   // Allows scroll spy to work without change URL fragment
-  $(document).on('click', function(e) {
-    $('[data-spy="scroll"]').each(function() {
-      var spyTarget = $(this).data('target');
-      var $target = $(e.target);
+  Ember.$(document).on('click', function(e) {
+    Ember.$('[data-spy="scroll"]').each(function() {
+      var spyTarget = Ember.$(this).data('target');
+      var $target = Ember.$(e.target);
       if ($target.closest(spyTarget).length) {
         e.preventDefault();
-        $anchor = $($target.attr('href'));
+        var $anchor = Ember.$($target.attr('href'));
         if ($anchor.length) {
-          $(this).scrollTop($anchor.offset().top);
+          Ember.$(this).scrollTop($anchor.offset().top);
         }
       }
     });

@@ -1,8 +1,7 @@
 import Ember from 'ember';
-import modalTemplate from 'ember-strap/templates/modal';
 
 export default Ember.View.extend({
-  //layoutName: modalTemplate.toString(),
+  layoutName: 'es-modal',
 
   classNames: ['modal'],
   classNameBindings: ['animation:fade'],
@@ -11,9 +10,9 @@ export default Ember.View.extend({
   animation: true,
 
   sizeClass: function() {
-    if (this.get('size') == 'small') {
+    if (this.get('size') === 'small') {
       return 'modal-sm';
-    } else if (this.get('size') == 'large') {
+    } else if (this.get('size') === 'large') {
       return 'modal-lg';
     }
   }.property('size'),
