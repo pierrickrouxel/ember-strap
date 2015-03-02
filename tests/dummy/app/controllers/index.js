@@ -11,7 +11,8 @@ export default Ember.Controller.extend({
     });
   },
 
-  modal: 'App.ApplicationRoute = Ember.Route.extend({\n' +
+  modal: "import EmberStrap from 'ember-strap';\n\n" +
+         'App.ApplicationRoute = Ember.Route.extend(EmberStrap.ModalRouteMixin, {\n' +
          '  actions: {\n' +
          '    openExampleModal: function() {\n' +
          "      this.renderModal('modal-example', {\n" +
