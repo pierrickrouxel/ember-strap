@@ -1,6 +1,6 @@
 import Ember from 'ember';
 
-export default Ember.View.extend({
+export default Ember.View.extend(Ember.ViewTargetActionSupport, {
   layoutName: 'es-modal',
 
   classNames: ['modal'],
@@ -20,7 +20,7 @@ export default Ember.View.extend({
   registerEvents: function() {
     var _this = this;
     this.$().on('hidden.bs.modal', function() {
-      _this.get('controller').send('didHide');
+      _this.triggerAction({action: 'didHide'});
     });
   }.on('didInsertElement')
 });
