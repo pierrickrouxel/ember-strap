@@ -37,6 +37,7 @@ var registerPopover = function(options) {
 
 export default function(options) {
   var hash = options.hash;
+  var element = options.element;
 
   var popover = {
     parentView: options.data.view,
@@ -44,5 +45,5 @@ export default function(options) {
   };
 
   var popoverId = registerPopover(popover);
-  return new Ember.Handlebars.SafeString('data-ember-strap-popover="' + popoverId + '"');
+  element.setAttribute('data-ember-strap-popover', popoverId);
 }
