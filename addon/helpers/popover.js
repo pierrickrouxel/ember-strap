@@ -1,4 +1,5 @@
 import Ember from 'ember';
+import PopoverView from '../views/popover';
 
 var uuid = 0;
 
@@ -9,7 +10,7 @@ var registerPopover = function(options) {
   var viewHash = Ember.$.extend({ popoverId: popoverId }, options.hash);
   delete viewHash.container;
 
-  var view = options.parentView.createChildView('es-popover', viewHash);
+  var view = options.parentView.createChildView(PopoverView, viewHash);
 
   Ember.run.scheduleOnce('afterRender', this, function() {
     var $popover = Ember.$('[data-ember-strap-popover=' + popoverId + ']');
