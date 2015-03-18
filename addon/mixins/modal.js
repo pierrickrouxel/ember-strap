@@ -8,8 +8,15 @@ export default Ember.Mixin.create({
     options = (options || {});
     options.view = 'es-modal';
     options.templateName = name;
-    options.context = options.context || options.controller;
     options.target = this;
+
+    if (typeof options.controller === 'string') {
+      options.controller = container.lookup('controller:' + options.controller);
+    }
+
+    if (options.model) {
+      controller.set('model', options.model);
+    }
 
     if (!registeredModal) {
       registeredModal = ModalView.create({ container: this.container });

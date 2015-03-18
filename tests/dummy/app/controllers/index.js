@@ -15,16 +15,10 @@ export default Ember.Controller.extend({
   },
 
   modal: "import EmberStrap from 'ember-strap';\n\n" +
-         'App.ApplicationRoute = Ember.Route.extend(EmberStrap.ModalRouteMixin, {\n' +
+         'App.ApplicationRoute = Ember.Route.extend(EmberStrap.ModalMixin, {\n' +
          '  actions: {\n' +
          '    openExampleModal: function() {\n' +
-         "      this.renderModal('modal-example', {\n" +
-         "        into: 'application',\n" +
-         "        outlet: 'modal'\n" +
-         '      });\n' +
-         '    }\n\n' +
-         '    closeExampleModal: function() {\n' +
-         '      this.destroyModal();\n' +
+         "      this.renderModal('modal-example');\n" +
          '    }\n' +
          '  }\n' +
          '});',
