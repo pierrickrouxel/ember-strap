@@ -1,5 +1,5 @@
-import ModalRouteMixin from 'ember-strap/mixins/modal';
+import ModalMixin from 'ember-strap/mixins/modal';
 
 export default {
-  ModalRouteMixin: ModalRouteMixin
+  ModalMixin: ModalMixin
 };

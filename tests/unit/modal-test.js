@@ -4,7 +4,7 @@ import { test } from 'ember-qunit';
 import startApp from '../helpers/start-app';
 
 var App;
-module('Integration - ModalRouteMixin', {
+module('Integration - ModalMixin', {
   beforeEach: function() {
     App = startApp();
   },
@@ -14,7 +14,7 @@ module('Integration - ModalRouteMixin', {
 });
 
 test('it renders and destroys', function(assert) {
-  assert.expect(3);
+  assert.expect(2);
 
   visit('/');
   andThen(function() {
@@ -24,10 +24,5 @@ test('it renders and destroys', function(assert) {
   click('#modal button');
   andThen(function() {
     assert.equal(Ember.$('.modal').length, 1);
-  });
-
-  click('.modal .btn-default');
-  andThen(function() {
-    assert.equal(Ember.$('.modal').css('display'), 'none');
   });
 });

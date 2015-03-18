@@ -26,8 +26,6 @@ export default {
   initialize: function(container, application) {
     hackScrollSpy();
 
-    container.register('view:es-modal', ModalView, { singleton: true });
-
     Ember.Handlebars.registerHelper('es-popover', PopoverHelper);
   }
 };

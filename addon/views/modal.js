@@ -9,6 +9,12 @@ export default Ember.View.extend(Ember.ViewTargetActionSupport, {
 
   animation: true,
 
+  actions: {
+    hideModal: function() {
+      this.$().modal('hide');
+    }
+  },
+
   sizeClass: function() {
     if (this.get('size') === 'small') {
       return 'modal-sm';
@@ -17,10 +23,10 @@ export default Ember.View.extend(Ember.ViewTargetActionSupport, {
     }
   }.property('size'),
 
-  registerEvents: function() {
+  _registerEvents: function() {
     var _this = this;
     this.$().on('hidden.bs.modal', function() {
-      _this.triggerAction({action: 'didHide'});
+      _this.triggerAction({ action: 'didHide' });
     });
   }.on('didInsertElement')
 });
