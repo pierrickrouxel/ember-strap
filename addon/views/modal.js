@@ -9,6 +9,9 @@ export default Ember.View.extend(Ember.ViewTargetActionSupport, {
 
   animation: true,
 
+  // Action called when modal is hidden
+  didHideAction: null,
+
   actions: {
     hideModal: function() {
       this.$().modal('hide');
@@ -25,8 +28,10 @@ export default Ember.View.extend(Ember.ViewTargetActionSupport, {
 
   _registerEvents: function() {
     var _this = this;
-    this.$().on('hidden.bs.modal', function() {
-      _this.triggerAction({ action: 'didHide' });
-    });
+    if (this.get('didHideAction')) {
+      this.$().on('hidden.bs.modal', function() {
+        _this.triggerAction({ action: _this.get('didHideAction') });
+      });
+    }
   }.on('didInsertElement')
 });
