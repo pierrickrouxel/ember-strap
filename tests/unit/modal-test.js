@@ -14,7 +14,7 @@ module('Integration - ModalMixin', {
 });
 
 test('it renders and destroys', function(assert) {
-  assert.expect(2);
+  assert.expect(3);
 
   visit('/');
   andThen(function() {
@@ -24,5 +24,10 @@ test('it renders and destroys', function(assert) {
   click('#modal button');
   andThen(function() {
     assert.equal(Ember.$('.modal').length, 1);
+  });
+
+  click('.modal .btn-default');
+  andThen(function() {
+    assert.equal(Ember.$('.modal').css('display'), 'none');
   });
 });

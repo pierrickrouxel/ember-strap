@@ -20,8 +20,9 @@ export default Ember.Mixin.create({
     options.target = options.controller || this;
 
     if (!registeredModal) {
+      var $el = this.container.lookup('application:main').get('rootElement');
       registeredModal = ModalView.create({ container: this.container });
-      registeredModal.append();
+      registeredModal.appendTo($el);
     }
 
     registeredModal.setProperties(options);
