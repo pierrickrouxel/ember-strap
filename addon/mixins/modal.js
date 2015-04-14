@@ -20,10 +20,11 @@ export default Ember.Mixin.create({
     options.target = options.controller || this;
 
     var $el = this.container.lookup('application:main').get('rootElement');
-    if (registeredModal) {
+    var topView = this.container.lookup('view:toplevel');
+    if (registeredModal) {
       registeredModal.destroy();
     }
-    registeredModal = ModalView.create({ container: this.container });
+    registeredModal = topView.createChildView(ModalView);
     registeredModal.appendTo($el);
 
     registeredModal.setProperties(options);

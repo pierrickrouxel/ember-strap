@@ -10,6 +10,7 @@ var registerPopover = function(options) {
   var viewHash = Ember.$.extend({ popoverId: popoverId }, options.hash);
   delete viewHash.container;
 
+  var $el = options.parentView.container.lookup('application:main').get('rootElement');
   var view = options.parentView.createChildView(PopoverView, viewHash);
 
   Ember.run.scheduleOnce('afterRender', this, function() {
@@ -18,7 +19,7 @@ var registerPopover = function(options) {
 
     options.hash.html = true;
     options.hash.content = $preparedElement;
-    options.hash.container = (options.hash.container || 'body');
+    options.hash.container = (options.hash.container || $el);
 
     $popover.popover(options.hash);
 
