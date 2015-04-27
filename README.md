@@ -1,6 +1,10 @@
-# Ember-strap
+# EmberStrap
 
 This README outlines the details of collaborating on this Ember addon.
+
+## Compatibility
+
+EmberStrap is compatible with Ember >= 1.11.0
 
 ## Installation
 

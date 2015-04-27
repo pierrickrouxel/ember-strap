@@ -15,19 +15,12 @@ var registerPopover = function(options) {
 
   Ember.run.scheduleOnce('afterRender', this, function() {
     var $popover = Ember.$('[data-ember-strap-popover=' + popoverId + ']');
-    var $preparedElement = view.createElement().$();
 
     options.hash.html = true;
-    options.hash.content = $preparedElement;
+    options.hash.content = view.createElement().$();
     options.hash.container = (options.hash.container || $el);
 
     $popover.popover(options.hash);
-
-    $popover.on('shown.bs.popover', function() {
-      var $parentElement = $preparedElement.parent();
-      view.destroyElement();
-      view.replaceIn($parentElement);
-    });
 
     options.parentView.on('willDestroyElement', function() {
       $popover.popover('destroy');
