@@ -8,7 +8,7 @@ EmberStrap is compatible with Ember >= 1.11.0
 
 ## Installation
 
-* `ember install:addon ember-strap`
+* `ember install ember-strap`
 
 ## Running
 
