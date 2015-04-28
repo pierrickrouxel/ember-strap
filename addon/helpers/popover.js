@@ -17,10 +17,18 @@ var registerPopover = function(options) {
     var $popover = Ember.$('[data-ember-strap-popover=' + popoverId + ']');
 
     options.hash.html = true;
-    options.hash.content = view.createElement().$();
+    options.hash.content = function() {
+      return view.$();
+    };
     options.hash.container = (options.hash.container || $el);
 
     $popover.popover(options.hash);
+    var $content = $popover.data('bs.popover').tip().find('.popover-content');
+    view.appendTo($content);
+
+    $popover.on('shown.bs.popover', function() {
+      view.rerender();
+    });
 
     options.parentView.on('willDestroyElement', function() {
       $popover.popover('destroy');
