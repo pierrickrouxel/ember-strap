@@ -7,7 +7,9 @@ module.exports = function(environment) {
     baseURL: '/',
     locationType: 'auto',
     contentSecurityPolicy: {
-      "connect-src": "'self' https://api.github.com"
+      "connect-src": "'self' https://api.github.com",
+      "img-src": "'self' http://www.google-analytics.com",
+      "script-src": "'self' 'unsafe-inline' http://www.google-analytics.com",
     },
     EmberENV: {
       FEATURES: {
