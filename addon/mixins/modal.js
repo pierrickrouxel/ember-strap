@@ -19,13 +19,13 @@ export default Ember.Mixin.create({
 
     options.target = options.controller || this;
 
-    var $el = this.container.lookup('application:main').get('rootElement');
+    var $root = this.container.lookup('application:main').get('rootElement');
     var topView = this.container.lookup('view:toplevel');
     if (registeredModal) {
       registeredModal.destroy();
     }
     registeredModal = topView.createChildView(ModalView);
-    registeredModal.appendTo($el);
+    registeredModal.appendTo($root);
 
     registeredModal.setProperties(options);
     Ember.run.scheduleOnce('afterRender', this, function() {

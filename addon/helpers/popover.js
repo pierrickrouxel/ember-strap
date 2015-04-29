@@ -7,11 +7,12 @@ var registerPopover = function(options) {
   var popoverId = ++uuid;
 
   // Fix container property override
-  var viewHash = Ember.$.extend({ popoverId: popoverId }, options.hash);
+  var viewHash = Ember.$.extend({}, options.hash);
   delete viewHash.container;
 
-  var $el = options.parentView.container.lookup('application:main').get('rootElement');
+  var $root = options.parentView.container.lookup('application:main').get('rootElement');
   var view = options.parentView.createChildView(PopoverView, viewHash);
+  view._popoverId = popoverId;
 
   Ember.run.scheduleOnce('afterRender', this, function() {
     var $popover = Ember.$('[data-ember-strap-popover=' + popoverId + ']');
@@ -20,14 +21,16 @@ var registerPopover = function(options) {
     options.hash.content = function() {
       return view.$();
     };
-    options.hash.container = (options.hash.container || $el);
+    options.hash.container = (options.hash.container || $root);
 
     $popover.popover(options.hash);
     var $content = $popover.data('bs.popover').tip().find('.popover-content');
     view.appendTo($content);
 
     $popover.on('shown.bs.popover', function() {
-      view.rerender();
+      Ember.run(function() {
+        view.rerender();
+      });
     });
 
     options.parentView.on('willDestroyElement', function() {

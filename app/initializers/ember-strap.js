@@ -23,7 +23,7 @@ var hackScrollSpy = function() {
 export default {
   name: "ember-strap",
 
-  initialize: function(container, application) {
+  initialize: function() {
     hackScrollSpy();
 
     Ember.Handlebars.registerHelper('es-popover', PopoverHelper);

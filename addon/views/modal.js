@@ -1,7 +1,8 @@
 import Ember from 'ember';
+import layout from '../templates/modal';
 
 export default Ember.View.extend(Ember.ViewTargetActionSupport, {
-  layoutName: 'es-modal',
+  layout: layout,
 
   classNames: ['modal'],
   classNameBindings: ['animation:fade'],
