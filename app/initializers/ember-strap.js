@@ -1,6 +1,4 @@
 import Ember from 'ember';
-import ModalView from 'ember-strap/views/modal';
-import PopoverView from 'ember-strap/views/popover';
 import PopoverHelper from 'ember-strap/helpers/popover';
 
 var hackScrollSpy = function() {
