@@ -9,7 +9,17 @@ EmberStrap is compatible with Ember >= 1.11.0
 ## Installation
 
 * `ember install ember-strap`
-* You are responsible of bootstrap styles installation because you can use sass, less or css.
+
+## Configuration
+
+You can disable styles. This is useful to use less or sass.
+`
+ENV.emberStrap: {
+  includeStyles: false
+};
+
+...
+`
 
 ## Running
 
