@@ -19,20 +19,20 @@ export default Ember.View.extend(Ember.ViewTargetActionSupport, {
     }
   },
 
-  sizeClass: function() {
+  sizeClass: Ember.computed('size', function() {
     if (this.get('size') === 'small') {
       return 'modal-sm';
     } else if (this.get('size') === 'large') {
       return 'modal-lg';
     }
-  }.property('size'),
+  }),
 
-  _registerEvents: function() {
+  _registerEvents: Ember.on('didInsertElement', function() {
     var _this = this;
     if (this.get('didHideAction')) {
       this.$().on('hidden.bs.modal', function() {
         _this.triggerAction({ action: _this.get('didHideAction') });
       });
     }
-  }.on('didInsertElement')
+  })
 });
