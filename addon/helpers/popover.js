@@ -27,12 +27,6 @@ var registerPopover = function(options) {
     var $content = $popover.data('bs.popover').tip().find('.popover-content');
     view.appendTo($content);
 
-    $popover.on('shown.bs.popover', function() {
-      Ember.run(function() {
-        view.rerender();
-      });
-    });
-
     options.parentView.on('willDestroyElement', function() {
       $popover.popover('destroy');
     });
