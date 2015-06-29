@@ -1,6 +1,6 @@
 {
   "name": "ember-strap",
-  "version": "0.0.1-alpha3",
+  "version": "0.0.1-alpha4",
   "description": "Ember wrapper for Bootstrap",
   "directories": {
     "doc": "doc",
