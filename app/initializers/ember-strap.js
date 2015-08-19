@@ -1,5 +1,4 @@
 import Ember from 'ember';
-import PopoverHelper from 'ember-strap/helpers/popover';
 
 var hackScrollSpy = function() {
   // Allows scroll spy to work without change URL fragment
@@ -23,7 +22,5 @@ export default {
 
   initialize: function() {
     hackScrollSpy();
-
-    Ember.Handlebars.registerHelper('es-popover', PopoverHelper);
   }
 };

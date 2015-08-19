@@ -35,7 +35,7 @@ var registerPopover = function(options) {
   return popoverId;
 };
 
-export default function(options) {
+export default Ember.Helper.helper(function(options) {
   var hash = options.hash;
   var element = options.element;
 
@@ -46,4 +46,4 @@ export default function(options) {
 
   var popoverId = registerPopover(popover);
   element.setAttribute('data-ember-strap-popover', popoverId);
-}
+});
