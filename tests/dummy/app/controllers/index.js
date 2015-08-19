@@ -12,32 +12,5 @@ export default Ember.Controller.extend({
         }
       });
     });
-  },
-
-  modal: "import EmberStrap from 'ember-strap';\n\n" +
-         'App.ApplicationRoute = Ember.Route.extend(EmberStrap.ModalMixin, {\n' +
-         '  actions: {\n' +
-         '    openExampleModal: function() {\n' +
-         "      this.renderModal('modal-example');\n" +
-         '    }\n' +
-         '  }\n' +
-         '});',
-
-  hideModal: '<button {{action hideModal on="click" target="view"}}>Close</button>',
-
-  popover: '<button {{es-popover}}>Show popover</button>',
-
-  hidePopover: '<button {{action hidePopover on="click" target="view"}}>Close</button>',
-
-  scrollspy: '<body data-spy="scroll" data-target=".navbar-example">\n' +
-             '  ...\n' +
-             '  <div class="navbar-example">\n' +
-             '    <ul class="nav nav-tabs">\n' +
-             '      <li>\n' +
-             '        ...\n' +
-             '      </li>\n' +
-             '    </ul>\n' +
-             '  </div>\n' +
-             '  ...\n' +
-             '</body>'
+  }
 });
