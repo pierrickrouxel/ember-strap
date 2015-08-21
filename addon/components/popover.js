@@ -54,11 +54,14 @@ export default Ember.Component.extend({
     var displayed = tip.tip().hasClass('in');
     if (this.get('isShown') && !displayed) {
       this.get('$sender').popover('show');
+      // When the bootstrap popover has `click` trigger, the `inState` value
+      // doesn't reset correctly after a manual action.
       if (this.get('mode') === 'click') {
         tip.inState.click = !tip.inState.click;
       }
     } else if (!this.get('isShown') && displayed) {
       this.get('$sender').popover('hide');
+      // See before.
       if (this.get('mode') === 'click') {
         tip.inState.click = !tip.inState.click;
       }
