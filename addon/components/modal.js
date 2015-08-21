@@ -7,18 +7,15 @@ export default Ember.Component.extend({
   owner: Ember.inject.service('es-modals'),
   layout: template,
 
-  currentContext: computed('owner.modalContexts.lastObject', function () {
-    var context = this.get('owner.modalContexts.lastObject');
-    if (context) {
-      context.set('view', this.innerView(context));
-    }
-    return context;
-  }),
+  currentContext: computed.alias('owner.modalContexts.lastObject'),
+  // Keep the currentContext loaded before the end of the modal's animation
+  deferredContext: null,
 
   animation: computed('deferredContext', function () {
     return this.getWithDefault('deferredContext.options.animation', true);
   }),
 
+  // Find the modal's size class
   sizeClass: computed('deferredContext', function () {
     switch (this.get('deferredContext.options.size')) {
       case 'small':
@@ -35,7 +32,7 @@ export default Ember.Component.extend({
       if (this.get('currentContext')) {
         this.set('deferredContext', this.get('currentContext'));
         Ember.run.scheduleOnce('afterRender', () => {
-          this.$('.modal').modal({ show: false });
+          // Change the modal's options after initialization
           this.$('.modal').data('bs.modal').options.backdrop = this.getWithDefault('currentContext.options.backdrop', true);
           this.$('.modal').data('bs.modal').options.keyboard = this.getWithDefault('currentContext.options.keyboard', true);
           this.$('.modal').modal('show');
@@ -50,6 +47,8 @@ export default Ember.Component.extend({
   }),
 
   registerListener: on('didInsertElement', function () {
+    this.$('.modal').modal({ show: false });
+
     this.$('.modal').on('hidden.bs.modal', () => {
       if (this.get('deferredContext')) {
         this.resetParameters();
@@ -61,7 +60,10 @@ export default Ember.Component.extend({
     });
   }),
 
-  innerView: function(current) {
+  innerView: computed('deferredContext', function() {
+    var current = this.get('deferredContext');
+    if (!current) { return; }
+
     var name = current.get('name'),
         container = this.get('container'),
         component = container.lookup('component-lookup:main').lookupFactory(name);
@@ -99,8 +101,9 @@ export default Ember.Component.extend({
     };
 
     return component.extend(args);
-  },
+  }),
 
+  // Remove modal parameters from url
   resetParameters: function () {
     var source = this.get('deferredContext.source'),
         proto = source.constructor.proto(),
