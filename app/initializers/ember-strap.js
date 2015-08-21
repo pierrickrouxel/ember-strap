@@ -1,5 +1,7 @@
 import Ember from 'ember';
 import 'ember-strap/router-dsl-ext';
+import { registerKeywords } from 'ember-strap/ember-internals';
+registerKeywords();
 
 var hackScrollSpy = function() {
   // Allows scroll spy to work without change URL fragment

@@ -31,12 +31,15 @@ export default Ember.Component.extend({
     if (this.get('element')) {
       if (this.get('currentContext')) {
         this.set('deferredContext', this.get('currentContext'));
+
+        // Show modal after view render
         Ember.run.scheduleOnce('afterRender', () => {
           // Change the modal's options after initialization
           this.$('.modal').data('bs.modal').options.backdrop = this.getWithDefault('currentContext.options.backdrop', true);
           this.$('.modal').data('bs.modal').options.keyboard = this.getWithDefault('currentContext.options.keyboard', true);
           this.$('.modal').modal('show');
         });
+
       } else {
         this.$('.modal').one('hidden.bs.modal', () => {
           this.set('deferredContext', null);
@@ -46,9 +49,10 @@ export default Ember.Component.extend({
     }
   }),
 
-  registerListener: on('didInsertElement', function () {
+  registerModal: on('didInsertElement', function () {
     this.$('.modal').modal({ show: false });
 
+    // Reset parameters after the modal has been closed
     this.$('.modal').on('hidden.bs.modal', () => {
       if (this.get('deferredContext')) {
         this.resetParameters();
@@ -60,7 +64,7 @@ export default Ember.Component.extend({
     });
   }),
 
-  innerView: computed('deferredContext', function() {
+  innerComponent: computed('deferredContext', function() {
     var current = this.get('deferredContext');
     if (!current) { return; }
 

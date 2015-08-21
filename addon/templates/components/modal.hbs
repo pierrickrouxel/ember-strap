@@ -1,8 +1,8 @@
 <div class="modal {{if animation 'fade'}}" tabindex="-1" role="dialog">
   <div class="modal-dialog {{sizeClass}}">
     <div class="modal-content">
-      {{#with innerView as |view|}}
-        {{view view hide="hide"}}
+      {{#with innerComponent as |component|}}
+        {{es-view component hide="hide"}}
       {{/with}}
     </div>
   </div>
