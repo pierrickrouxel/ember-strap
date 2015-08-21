@@ -1,0 +1,9 @@
+<div class="modal {{if animation 'fade'}}" tabindex="-1" role="dialog">
+  <div class="modal-dialog {{sizeClass}}">
+    <div class="modal-content">
+      {{#with deferredContext.view as |view|}}
+        {{view view hide="hide"}}
+      {{/with}}
+    </div>
+  </div>
+</div>

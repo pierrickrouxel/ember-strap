@@ -1,6 +1,6 @@
 import Ember from 'ember';
 
-const { $, assert } = Ember;
+const { $, assert, computed } = Ember;
 
 export default Ember.Component.extend({
 
@@ -15,12 +15,12 @@ export default Ember.Component.extend({
   mode: 'click',
 
   actions: {
-    hidePopover: function () {
+    hide: function () {
       this.get('$sender').popover('hide');
     }
   },
 
-  $sender: Ember.computed(function () {
+  $sender: computed(function () {
     var $sender = $('#' + this.get('for'));
     assert('You should put a valid ID in `for` property', $sender.length);
     return $sender;
