@@ -1,4 +1,5 @@
-<button id="popover-example">Show popover</button>
-{{#es-popover for="popover-example"}}
+<button class="btn btn-primary" id="popover-example">Show popover</button>
+{{#es-popover for="popover-example" isShown=isShownPopover}}
   Some content
+  <button class="btn btn-default" type="button" {{action 'hidePopover'}}>Close</button>
 {{/es-popover}}
