@@ -37,7 +37,8 @@ export default Ember.Component.extend({
       delay: this.get('delay'),
       placement: this.get('placement'),
       title: this.get('title'),
-      trigger: this.get('mode')
+      trigger: this.get('mode'),
+      container: 'body'
     });
 
     $sender.on('shown.bs.popover', () => {
@@ -70,5 +71,11 @@ export default Ember.Component.extend({
 
   willDestroyElement: function () {
     this.get('$sender').popover('destroy');
+  },
+
+  actions: {
+    hide: function () {
+      this.set('isShown', false);
+    }
   }
 });
