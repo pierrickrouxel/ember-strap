@@ -1,8 +1,11 @@
 import Ember from 'ember';
+import template from '../templates/components/popover';
 
 const { $, assert, computed, observer } = Ember;
 
 export default Ember.Component.extend({
+  layout: template,
+
   // The ID of element that trigger popover action
   for: null,
 
