@@ -64,6 +64,10 @@ export default Ember.Component.extend({
     });
   }),
 
+  willDestroyElement: function () {
+    this.$('.model').off('.bs.modal');
+  },
+
   innerComponent: computed('deferredContext', function() {
     var current = this.get('deferredContext');
     if (!current) { return; }

@@ -4,7 +4,7 @@ import { test } from 'ember-qunit';
 import startApp from '../helpers/start-app';
 
 var App;
-module('Integration - PopoverHelper', {
+module('Integration - Popover', {
   beforeEach: function() {
     App = startApp();
   },
