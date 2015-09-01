@@ -1,4 +1,4 @@
-this.modal('modal-example', {
+this.esModal('modal-example', {
   withParams: ['modal'],
   otherParams: {
     size: 'small'
