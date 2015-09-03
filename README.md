@@ -1,4 +1,4 @@
-# EmberStrap
+# EmberStrap [![Ember Observer Score](http://emberobserver.com/badges/ember-strap.svg)](http://emberobserver.com/addons/ember-strap) [![Build Status](https://travis-ci.org/pierrickrouxel/ember-strap.svg)](https://travis-ci.org/pierrickrouxel/ember-strap)
 
 EmberStrap tries to provide a simple way to use Bootstrap in Ember. It doesn't reinvent the wheel, it just wraps the Bootstrap plugins with an Ember compliant implementation.
 
