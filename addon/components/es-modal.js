@@ -1,11 +1,12 @@
 import Ember from 'ember';
-import template from '../templates/components/modal';
+import layout from '../templates/components/es-modal';
 
-const { computed, observer, on, copy, assert } = Ember;
+const { computed, observer, on, copy, assert, inject } = Ember;
 
 export default Ember.Component.extend({
-  owner: Ember.inject.service('es-modals'),
-  layout: template,
+  owner: inject.service('es-modals'),
+  transitions: inject.service('es-transitions'),
+  layout: layout,
 
   currentContext: computed.alias('owner.modalContexts.lastObject'),
   // Keep the currentContext loaded before the end of the modal's animation
@@ -37,13 +38,24 @@ export default Ember.Component.extend({
           // Change the modal's options after initialization
           this.$('.modal').data('bs.modal').options.backdrop = this.getWithDefault('currentContext.options.backdrop', true);
           this.$('.modal').data('bs.modal').options.keyboard = this.getWithDefault('currentContext.options.keyboard', true);
+
+          this.$('.modal').one('shown.bs.modal', () => {
+            this._isShown = true;
+            this.get('transitions').decrementRunningTransitions();
+          });
+          this.get('transitions').incrementRunningTransitions();
           this.$('.modal').modal('show');
         });
 
-      } else {
+      } else if (this._isShown) {
         this.$('.modal').one('hidden.bs.modal', () => {
-          this.set('deferredContext', null);
+          this._isShown = false;
+          this.get('transitions').decrementRunningTransitions();
+          Ember.run(() => {
+            this.set('deferredContext', null);
+          });
         });
+        this.get('transitions').incrementRunningTransitions();
         this.$('.modal').modal('hide');
       }
     }
@@ -65,7 +77,8 @@ export default Ember.Component.extend({
   }),
 
   willDestroyElement: function () {
-    this.$('.model').off('.bs.modal');
+    this.$('.modal').modal('hide');
+    this.$('.modal').off('.bs.modal');
   },
 
   innerComponent: computed('deferredContext', function() {

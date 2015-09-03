@@ -1,3 +1,1 @@
-import Tooltip from 'ember-strap/components/tooltip';
-
-export default Tooltip;
+export { default } from 'ember-strap/components/es-tooltip';

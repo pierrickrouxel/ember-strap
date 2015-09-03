@@ -79,6 +79,9 @@
 </div>
 <script type="text/javascript">
   $(document).ready(function() {
-    $('#tooltip-example').on('click', function() { return false; });
+    $('#tooltip-example').on('click', function(e) {
+      e.preventDefault();
+      $(this).focus();
+    });
   });
 </script>

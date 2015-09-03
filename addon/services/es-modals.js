@@ -1,6 +1,6 @@
 import Ember from 'ember';
 
-const { on, get, computed, observer } = Ember;
+const { on, get, computed, observer, inject } = Ember;
 
 var Modal = Ember.Object.extend({
 
@@ -78,7 +78,7 @@ function currentParams(controller, paramMap) {
 }
 
 export default Ember.Service.extend({
-  routing: Ember.inject.service('-routing'),
+  routing: inject.service('-routing'),
 
   setup: on('init', function () {
     this.set('modalContexts', Ember.A());

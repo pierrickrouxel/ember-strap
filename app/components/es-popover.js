@@ -1,3 +1,1 @@
-import Popover from 'ember-strap/components/popover';
-
-export default Popover;
+export { default } from 'ember-strap/components/es-popover';

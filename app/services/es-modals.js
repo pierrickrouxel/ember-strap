@@ -1,2 +1,1 @@
-import Modals from 'ember-strap/services/modals';
-export default Modals;
+export {default} from 'ember-strap/services/es-modals';

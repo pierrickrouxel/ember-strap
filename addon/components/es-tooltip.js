@@ -1,10 +1,10 @@
 import Ember from 'ember';
-import template from '../templates/components/tooltip';
+import layout from '../templates/components/es-tooltip';
 
 const { $, assert, computed, observer } = Ember;
 
 export default Ember.Component.extend({
-  layout: template,
+  layout: layout,
   type: 'tooltip',
 
   // The ID of element that trigger tooltip action
@@ -49,7 +49,7 @@ export default Ember.Component.extend({
         }
       },
       trigger: this.get('mode'),
-      container: 'body'
+      container: this.container.lookup('view:toplevel').$()
     });
 
     $sender.on('show.bs.' + this.get('type'), () => {

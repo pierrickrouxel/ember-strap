@@ -1,3 +1,1 @@
-import Modal from 'ember-strap/components/modal';
-
-export default Modal;
+export { default } from 'ember-strap/components/es-modal';
