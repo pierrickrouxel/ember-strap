@@ -3,20 +3,58 @@ import layout from '../templates/components/es-modal';
 
 const { computed, observer, on, copy, assert, inject } = Ember;
 
+/**
+* Implements Bootstrap modals, see http://getbootstrap.com/javascript/#modals
+*
+* @class EsModal
+* @namespace Components
+* @extends Ember.Component
+*/
 export default Ember.Component.extend({
   owner: inject.service('es-modals'),
   transitions: inject.service('es-transitions'),
   layout: layout,
 
+  /**
+  * Context of the currently displayed modal.
+  *
+  * @property currentContext
+  * @type Ember.Object
+  * @readonly
+  * @private
+  */
   currentContext: computed.alias('owner.modalContexts.lastObject'),
-  // Keep the currentContext loaded before the end of the modal's animation
+
+  /**
+  * Keep the `currentContext` loaded before the end of the modal's animation.
+  *
+  * @property deferredContext
+  * @type Ember.Object
+  * @default null
+  * @private
+  */
   deferredContext: null,
 
+  /**
+  * Apply a CSS fade transition to the modal.
+  *
+  * @property animation
+  * @type boolean
+  * @default true
+  * @readonly
+  */
   animation: computed('deferredContext', function () {
     return this.getWithDefault('deferredContext.options.animation', true);
   }),
 
-  // Find the modal's size class
+  /**
+  * Compute CSS class to change modal size.
+  *
+  * @property sizeClass
+  * @type String
+  * @default ''
+  * @readonly
+  */
   sizeClass: computed('deferredContext', function () {
     switch (this.get('deferredContext.options.size')) {
       case 'small':
@@ -28,6 +66,44 @@ export default Ember.Component.extend({
     }
   }),
 
+  /**
+  * Initialize the Bootstrap modal and register the events.
+  *
+  * @method registerModal
+  * @private
+  */
+  registerModal: on('didInsertElement', function () {
+    this.$('.modal').modal({ show: false });
+
+    // Reset parameters after the modal has been closed
+    this.$('.modal').on('hidden.bs.modal', () => {
+      if (this.get('deferredContext')) {
+        this.clearParameters();
+      }
+    });
+
+    Ember.run.scheduleOnce('afterRender', () => {
+      this.toggle();
+    });
+  }),
+
+  /**
+  * Remove the listeners before destroy.
+  *
+  * @method willDestroyElement
+  * @private
+  */
+  willDestroyElement: function () {
+    this.$('.modal').modal('hide');
+    this.$('.modal').off('.bs.modal');
+  },
+
+  /**
+  * Show or hide modal when the `currentContext` changes.
+  *
+  * @method toggle
+  * @private
+  */
   toggle: observer('currentContext', function () {
     if (this.get('element')) {
       if (this.get('currentContext')) {
@@ -61,26 +137,12 @@ export default Ember.Component.extend({
     }
   }),
 
-  registerModal: on('didInsertElement', function () {
-    this.$('.modal').modal({ show: false });
-
-    // Reset parameters after the modal has been closed
-    this.$('.modal').on('hidden.bs.modal', () => {
-      if (this.get('deferredContext')) {
-        this.resetParameters();
-      }
-    });
-
-    Ember.run.scheduleOnce('afterRender', () => {
-      this.toggle();
-    });
-  }),
-
-  willDestroyElement: function () {
-    this.$('.modal').modal('hide');
-    this.$('.modal').off('.bs.modal');
-  },
-
+  /**
+  * Replace the content of modal with the routed component.
+  *
+  * @method innerComponent
+  * @private
+  */
   innerComponent: computed('deferredContext', function() {
     var current = this.get('deferredContext');
     if (!current) { return; }
@@ -124,8 +186,13 @@ export default Ember.Component.extend({
     return component.extend(args);
   }),
 
-  // Remove modal parameters from url
-  resetParameters: function () {
+  /**
+  * Clear the modal parameters from URL.
+  *
+  * @method clearParameters
+  * @private
+  */
+  clearParameters: function () {
     var source = this.get('deferredContext.source'),
         proto = source.constructor.proto(),
         params = this.get('deferredContext.options.withParams'),
@@ -143,7 +210,7 @@ export default Ember.Component.extend({
 
   actions: {
     hide: function () {
-      this.resetParameters();
+      this.clearParameters();
     }
   }
 });
