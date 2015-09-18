@@ -50,10 +50,11 @@
       {{partial 'tooltip'}}
       {{partial 'popover'}}
       {{partial 'scrollspy'}}
+      {{partial 'affix'}}
     </div>
 
     <div class="col-md-3">
-      <div class="bs-docs-sidebar hidden-print" data-spy="affix" data-offset-top="333">
+      {{#es-affix topOffset="333" classNames="bs-docs-sidebar hidden-print"}}
         <ul class="nav bs-docs-sidenav">
           <li><a href="#getting-started">Getting started</a></li>
           <hr>
@@ -61,9 +62,19 @@
           <li><a href="#tooltip">Tooltip</a></li>
           <li><a href="#popover">Popover</a></li>
           <li><a href="#scrollspy">Scrollspy</a></li>
+          <li><a href="#affix">Affix</a></li>
           <a class="back-to-top" href="#" {{action 'scrollTop'}}>Back to top</a>
         </ul>
-      </div>
+      {{/es-affix}}
     </div>
   </div>
 </div>
+
+<footer class="bs-docs-footer">
+  <div class="container">
+    <p>Designed and built by <a href="//github.com/pierrickrouxel" target="_blank">Pierrick Rouxel</a>.</p>
+    <hr>
+    <p>Using <a href="//twitter.github.com/bootstrap" target="_blank">Twitter Bootstrap</a> and the <a href="//getbootstrap.com/" target="_blank">Bootstrap's docs styles</a> designed and built by <a href="http://twitter.com/mdo" target="_blank">@mdo</a> and <a href="http://twitter.com/fat" target="_blank">@fat</a>.</p>
+    <p>Code licensed under <a href="//github.com/pierrickrouxel/ember-strap/blob/master/LICENSE.md" target="_blank">The MIT License</a>, documentation under <a href="http://creativecommons.org/licenses/by/3.0/">CC BY 3.0</a>.</p>
+  </div>
+</footer>
