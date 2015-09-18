@@ -138,7 +138,7 @@ export default Ember.Component.extend({
         }
       },
       trigger: this.get('mode'),
-      container: this.container.lookup('view:toplevel').$()
+      container: 'body'
     });
 
     $sender.on('show.bs.' + this.get('type'), () => {

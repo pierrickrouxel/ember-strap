@@ -17,11 +17,11 @@ test('hovering #tooltip-example', function(assert) {
 
   visit('/');
   andThen(function() {
-    assert.equal(find('.tooltip').length, 0);
+    assert.equal($('.tooltip').length, 0);
   });
 
   click('#tooltip-example');
   andThen(function() {
-    assert.equal(find('.tooltip').length, 1);
+    assert.equal($('.tooltip').length, 1);
   });
 });

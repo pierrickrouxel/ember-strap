@@ -17,11 +17,11 @@ test('clicking #popover-example', function(assert) {
 
   visit('/');
   andThen(function() {
-    assert.equal(find('.popover').length, 0);
+    assert.equal($('.popover').length, 0);
   });
 
   click('#popover-example');
   andThen(function() {
-    assert.equal(find('.popover').length, 1);
+    assert.equal($('.popover').length, 1);
   });
 });
