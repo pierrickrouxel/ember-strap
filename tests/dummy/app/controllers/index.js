@@ -1,3 +1,5 @@
+/* global compareVersions:false */
+
 import Ember from 'ember';
 
 export default Ember.Controller.extend({
@@ -7,14 +9,14 @@ export default Ember.Controller.extend({
     }
   },
 
-  init: function() {
-    var _this = this;
-    $.getJSON('https://api.github.com/repos/pierrickrouxel/ember-strap/tags', function(json) {
+  init() {
+    $.getJSON('https://api.github.com/repos/pierrickrouxel/ember-strap/tags', (json) => {
       // Asynchronous breaks tests
-      Ember.run(function() {
-        var lastVersion = Ember.A(json).get('firstObject');
+      Ember.run(() => {
+        let versions = Ember.A(json).map(function(version) { return version.name.substr(1); });
+        let lastVersion = Ember.A(versions.sort(compareVersions)).get('lastObject');
         if (lastVersion) {
-          _this.set('version', lastVersion.name);
+          this.set('version', 'v' + lastVersion);
         }
       });
     });
