@@ -2,9 +2,13 @@
 
 EmberStrap tries to provide a simple way to use Bootstrap in Ember. It doesn't reinvent the wheel, it just wraps the Bootstrap plugins with an Ember compliant implementation.
 
+## Documentation
+You can find complete documentation with examples here:
+[http://pierrickrouxel.github.io/ember-strap/](http://pierrickrouxel.github.io/ember-strap/)
+
 ## Compatibility
 
-EmberStrap follows the Ember versionning. (example: EmberStrap 2.0.0 is designed to work with Ember 2.0.x.)
+EmberStrap follows the Ember versioning. (example: EmberStrap 2.0.0 is designed to work with Ember 2.0.x.)
 
 ## Installation
 
