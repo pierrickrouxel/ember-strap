@@ -2,6 +2,8 @@
 
 import Ember from 'ember';
 
+const { computed } = Ember;
+
 export default Ember.Controller.extend({
   actions: {
     hidePopover: function () {
@@ -20,5 +22,13 @@ export default Ember.Controller.extend({
         }
       });
     });
-  }
+  },
+
+  affixTargetElement: computed(function() {
+    if (Ember.testing) {
+      return '#ember-testing-container';
+    } else {
+      return window;
+    }
+  })
 });

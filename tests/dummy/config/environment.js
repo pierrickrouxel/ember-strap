@@ -10,6 +10,7 @@ module.exports = function(environment) {
       "connect-src": "'self' https://api.github.com",
       "img-src": "'self' http://www.google-analytics.com",
       "script-src": "'self' 'unsafe-inline' http://www.google-analytics.com",
+      "style-src": "'self' 'unsafe-inline'"
     },
     EmberENV: {
       FEATURES: {

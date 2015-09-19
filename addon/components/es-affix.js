@@ -22,9 +22,19 @@ export default Ember.Component.extend({
   */
   offset: 10,
 
+  /**
+  * Specifies the target element of the affix.
+  *
+  * @property targetElement
+  * @type String|Object
+  * @default the `window` object
+  */
+  targetElement: window,
+
   didInsertElement() {
     this.$().affix({
-      offset: this.get('offset')
+      offset: this.get('offset'),
+      target: this.get('targetElement')
     });
   }
 });
