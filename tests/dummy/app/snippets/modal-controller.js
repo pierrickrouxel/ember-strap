@@ -1,4 +1,4 @@
-import Ember from 'Ember';
+import Ember from 'ember';
 
 export default Ember.Controller.extend({
   queryParams: ['modal'],
