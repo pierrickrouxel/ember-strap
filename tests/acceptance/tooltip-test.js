@@ -20,7 +20,7 @@ test('hovering #tooltip-example', function(assert) {
     assert.equal($('.tooltip').length, 0);
   });
 
-  click('#tooltip-example');
+  triggerEvent('#tooltip-example', 'focus');
   andThen(function() {
     assert.equal($('.tooltip').length, 1);
   });
