@@ -8,12 +8,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="shortcut icon" href="assets/images/favicon.png">
 
-    {{content-for 'head'}}
+    {{content-for "head"}}
 
     <link rel="stylesheet" href="assets/vendor.css">
     <link rel="stylesheet" href="assets/dummy.css">
-
-    {{content-for 'head-footer'}}
 
     <!-- Google Analytics -->
     <script>
@@ -25,13 +23,14 @@
       ga('create', 'UA-36663147-3', 'auto');
       ga('send', 'pageview');
     </script>
+    {{content-for "head-footer"}}
   </head>
   <body data-spy="scroll" data-target=".bs-docs-sidebar">
-    {{content-for 'body'}}
+    {{content-for "body"}}
 
     <script src="assets/vendor.js"></script>
     <script src="assets/dummy.js"></script>
 
-    {{content-for 'body-footer'}}
+    {{content-for "body-footer"}}
   </body>
 </html>
