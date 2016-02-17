@@ -97,7 +97,7 @@ export default Ember.Component.extend({
   * @readonly
   */
   $sender: computed(function () {
-    var $sender = $('#' + this.get('for'));
+    let $sender = $('#' + this.get('for'));
     assert('You should put a valid ID in `for` property', $sender.length);
     return $sender;
   }),
@@ -119,7 +119,7 @@ export default Ember.Component.extend({
   * @private
   */
   didInsertElement: function () {
-    var $sender = this.get('$sender');
+    let $sender = this.get('$sender');
     $sender[this.get('type')]({
       html: true,
       content: () => {
@@ -157,8 +157,8 @@ export default Ember.Component.extend({
   * @private
   */
   toggle: observer('isShown', function () {
-    var tip = this.get('$sender').data('bs.' + this.get('type'));
-    var displayed = tip.isInStateTrue();
+    let tip = this.get('$sender').data('bs.' + this.get('type'));
+    let displayed = tip.isInStateTrue();
     if (this.get('isShown') && !displayed) {
       this.get('$sender')[this.get('type')]('show');
       // When the bootstrap tooltip is in `click` mode, the `inState` value

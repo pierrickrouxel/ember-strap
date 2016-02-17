@@ -1,5 +1,6 @@
 import Ember from 'ember';
 import layout from '../templates/components/es-modal';
+import getOwner from 'ember-getowner-polyfill';
 
 const { computed, observer, on, copy, assert, inject } = Ember;
 
@@ -144,41 +145,41 @@ export default Ember.Component.extend({
   * @private
   */
   innerComponent: computed('deferredContext', function() {
-    var current = this.get('deferredContext');
+    let current = this.get('deferredContext');
     if (!current) { return; }
 
-    var name = current.get('name'),
-        container = this.get('container'),
-        component = container.lookup('component-lookup:main').lookupFactory(name);
+    let name = current.get('name'),
+        owner = getOwner(this),
+        component = owner.lookup('component-lookup:main').lookupFactory(name);
     assert("Tried to render a modal using component '" + name + "', but couldn't find it.", !!component);
 
-    var args = copy(current.get('params'));
+    let args = copy(current.get('params'));
 
     // set source so we can bind other params to it
     args._source = computed(function() {
       return current.get('source');
     });
 
-    var otherParams = current.get('options.otherParams');
-    var from, to;
+    let otherParams = current.get('options.otherParams');
+    let from, to;
     for (from in otherParams) {
       to = otherParams[from];
       args[to] = computed.alias('_source.' + from);
     }
 
-    var actions = current.get('options.actions') || {};
+    let actions = current.get('options.actions') || {};
 
     // Override sendAction in the modal component so we can intercept and
     // dynamically dispatch to the controller as expected
     args.sendAction = function(name) {
-      var actionName = actions[name];
+      let actionName = actions[name];
       if (!actionName) {
         this._super.apply(this, Array.prototype.slice.call(arguments));
         return;
       }
 
-      var controller = current.get('source');
-      var args = Array.prototype.slice.call(arguments, 1);
+      let controller = current.get('source');
+      let args = Array.prototype.slice.call(arguments, 1);
       args.unshift(actionName);
       controller.send.apply(controller, args);
     };
@@ -193,12 +194,12 @@ export default Ember.Component.extend({
   * @private
   */
   clearParameters: function () {
-    var source = this.get('deferredContext.source'),
+    let source = this.get('deferredContext.source'),
         proto = source.constructor.proto(),
         params = this.get('deferredContext.options.withParams'),
         clearThem = {};
 
-    for (var key in params) {
+    for (let key in params) {
       if (proto[key] instanceof Ember.ComputedProperty) {
         clearThem[key] = undefined;
       } else {

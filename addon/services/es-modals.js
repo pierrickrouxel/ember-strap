@@ -1,4 +1,5 @@
 import Ember from 'ember';
+import getOwner from 'ember-getowner-polyfill';
 
 const { on, get, computed, observer, inject } = Ember;
 
@@ -17,21 +18,28 @@ export default Ember.Service.extend({
     this.set('modalContexts', Ember.A());
     this.set('modals', Ember.A());
 
-    var modalConfigs = this.container.lookup('router:main').router.esModals;
+    let modalConfigs = getOwner(this).lookup('router:main').router.esModals;
     if (modalConfigs && modalConfigs.length > 0) {
-      var self = this;
+      let self = this;
       modalConfigs.forEach(function(m){ self.registerModal(m); });
     }
   }),
 
   registerModal: function(config) {
-    var ext = {
-      modals: this,
-      container: this.container
+    let ext = {
+      modals: this
     };
 
-    for (var param in config.options.withParams) {
+    for (let param in config.options.withParams) {
       ext[param + 'Observer'] = observerForParam(param);
+    }
+
+    // Ember 1.13 compatibility
+    var owner = getOwner(this);
+    if (Ember.setOwner) {
+      Ember.setOwner(ext, owner);
+    } else {
+      ext.container = this.container;
     }
 
     this.get('modals').pushObject(
@@ -44,7 +52,7 @@ export default Ember.Service.extend({
     // for invalidation, even though we aren't use it directly.
     this.get('routing.currentRouteName');
 
-    var infos = this.container.lookup('router:main').router.currentHandlerInfos;
+    let infos = getOwner(this).lookup('router:main').router.currentHandlerInfos;
     if (infos) {
       return infos.map(function(h){  return h.name;  });
     } else {
@@ -58,7 +66,7 @@ function observerForParam(param) {
   return observer('controller.' + param, function () { this.update(); });
 }
 
-var Modal = Ember.Object.extend({
+let Modal = Ember.Object.extend({
 
   enabled: computed('modals.activeRouteNames', function() {
     return get(this, 'modals.activeRouteNames').indexOf(get(this, 'route')) >= 0;
@@ -66,15 +74,15 @@ var Modal = Ember.Object.extend({
 
   controller: computed('enabled', function() {
     if (!get(this, 'enabled')) { return; }
-    var container = get(this, 'container');
-    var name = get(this, 'options.controller') || get(this, 'route');
-    return container.lookup('controller:' + name);
+    let owner = getOwner(this);
+    let name = get(this, 'options.controller') || get(this, 'route');
+    return owner.lookup('controller:' + name);
   }),
 
   update: observer('controller', on('init', function() {
-    var context = this.makeContext();
-    var activeContexts = get(this, 'modals.modalContexts');
-    var matchingContext = activeContexts.find((c) => get(c, 'modal') === this);
+    let context = this.makeContext();
+    let activeContexts = get(this, 'modals.modalContexts');
+    let matchingContext = activeContexts.find((c) => get(c, 'modal') === this);
 
     if (context) {
       if (matchingContext) {
@@ -90,7 +98,7 @@ var Modal = Ember.Object.extend({
   })),
 
   makeContext: function() {
-    var params,
+    let params,
         controller = get(this, 'controller');
 
     if (!controller) { return; }
@@ -110,10 +118,10 @@ var Modal = Ember.Object.extend({
 });
 
 function currentParams(controller, paramMap) {
-  var params = {};
-  var proto = controller.constructor.proto();
-  var foundNonDefault = false;
-  var to, from, value, defaultValue;
+  let params = {};
+  let proto = controller.constructor.proto();
+  let foundNonDefault = false;
+  let to, from, value, defaultValue;
 
   for (from in paramMap) {
     to = paramMap[from];

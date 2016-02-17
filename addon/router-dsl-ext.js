@@ -1,8 +1,8 @@
 import Ember from "ember";
-var Router = Ember.Router;
-var proto = Ember.RouterDSL.prototype;
+let Router = Ember.Router;
+let proto = Ember.RouterDSL.prototype;
 
-var currentMap = null;
+let currentMap = null;
 
 proto.esModal = function(componentName, opts) {
 
@@ -53,8 +53,8 @@ function expandParamOptions(options) {
       options = [options];
     }
 
-    var params = {};
-    var option, i, key;
+    let params = {};
+    let option, i, key;
 
     for (i = 0; i < options.length; i++) {
       option = options[i];
